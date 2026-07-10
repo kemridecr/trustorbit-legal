@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trust Orbit — Términos de Servicio</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.8;
+            color: #1f2937;
+            background: #f9fafb;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: white;
+        }
+        header {
+            margin-bottom: 40px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 30px;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #000;
+        }
+        .meta {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.6;
+        }
+        h2 {
+            font-size: 1.3rem;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            color: #0066cc;
+        }
+        h2:first-of-type {
+            margin-top: 0;
+        }
+        p {
+            margin-bottom: 15px;
+        }
+        strong {
+            font-weight: 600;
+            color: #000;
+        }
+        ul {
+            margin: 15px 0 15px 30px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #0066cc;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            h2 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← Volver a Documentos Legales</a>
+
+        <header>
+            <h1>Trust Orbit — Términos de Servicio</h1>
+            <div class="meta">
+                <p><strong>Fecha de vigencia:</strong> 9 de julio de 2026</p>
+                <p><strong>Empresa:</strong> Kenneth Steven Zamora Cabezas, persona física (sin entidad legal separada constituida actualmente), constituida conforme a las leyes de Costa Rica ("Trust Orbit", "nosotros" o "nuestro")</p>
+                <p><strong>Contacto:</strong> kemridecr@icloud.com</p>
+            </div>
+        </header>
+
+        <section>
+            <h2>1. Qué es (y qué no es) Trust Orbit</h2>
+            <p>Trust Orbit es una aplicación de registro social y reputación para llevar el control de deudas informales entre personas que se conocen: amigos, familia, compañeros de casa y grupos similares. Permite registrar quién le debe qué a quién por gastos compartidos, marcar cuándo se pagó una deuda, confirmar cuándo se recibió el pago, y construir un "puntaje de confianza" a partir de ese historial confirmado.</p>
+            <p><strong>Trust Orbit no es un procesador de pagos, un banco, un transmisor de dinero ni un servicio de custodia (escrow).</strong> El dinero nunca se mueve a través de la aplicación. Cuando registras un "cargo" en Trust Orbit, tú y la otra persona todavía tienen que saldar la cuenta por su cuenta — en efectivo, por transferencia bancaria, vía SINPE, o por cualquier método que acuerden, completamente fuera de la app. Trust Orbit solo registra que esto ocurrió y almacena la confirmación de cada lado.</p>
+            <p>Como nunca tocamos el dinero, no tenemos manera de verificar que un pago realmente ocurrió, no podemos revertir ni disputar una transacción, y no tenemos visibilidad de tus cuentas bancarias ni de tu historial de pagos fuera de lo que tú y tu contraparte le indiquen a la app.</p>
+
+            <h2>2. Elegibilidad</h2>
+            <p>Debes tener al menos 15 años para crear una cuenta de Trust Orbit o usar el servicio. Al crear una cuenta, confirmas que cumples con este requisito. Trust Orbit no está dirigida a menores de 15 años y no recopila conscientemente información de personas menores de esa edad. Si tienes entre 15 años y la mayoría de edad en tu jurisdicción, confirmas que cuentas con el permiso de tu madre, padre, o tutor legal para usar Trust Orbit.</p>
+
+            <h2>3. Tu cuenta</h2>
+            <ul>
+                <li>Necesitas un correo electrónico y una contraseña para registrarte (a través de nuestro proveedor de autenticación, Supabase Auth). También puedes agregar un nombre de usuario, un nombre completo y una foto de perfil (avatar).</li>
+                <li>Eres responsable de mantener la confidencialidad de tus credenciales de acceso y de toda la actividad que ocurra bajo tu cuenta.</li>
+                <li>Aceptas proporcionar información precisa y mantenerla actualizada.</li>
+                <li>Notifícanos de inmediato a kemridecr@icloud.com si crees que tu cuenta ha sido comprometida.</li>
+            </ul>
+
+            <h2>4. Cómo funciona el servicio</h2>
+            <p><strong>Cargos.</strong> Cualquier usuario (el "acreedor") puede registrar un cargo indicando que otro usuario (el "deudor") le debe dinero por algo. El deudor puede marcar el cargo como "pagado" una vez que haya pagado fuera de la app; el acreedor entonces confirma que lo recibió. Un cargo solo afecta los puntajes de confianza una vez que ambas partes lo han confirmado. Eres responsable de la exactitud de cualquier cargo que crees — Trust Orbit no verifica de forma independiente que un cargo sea legítimo.</p>
+            <p><strong>Puntaje de confianza.</strong> Calculamos un puntaje de confianza numérico (1.0–5.0) y una etiqueta de nivel (Excelente, Muy Bueno, Bueno, Regular, Necesita Mejorar) a partir de tu historial de pagos confirmados mutuamente — cosas como tu porcentaje de pagos a tiempo y la cantidad de pagos confirmados. Este puntaje es una señal reputacional basada en actividad autoreportada y confirmada mutuamente dentro de la app. <strong>No es un puntaje crediticio, no es una verificación de antecedentes financieros, y no es una garantía de la confiabilidad, solvencia o honestidad de nadie en la vida real.</strong> No lo uses como tu única base para extenderle crédito o confianza a otra persona.</p>
+            <p><strong>Visibilidad.</strong> Por defecto, tu puntaje de confianza e insignias/rachas relacionadas son visibles para los amigos que has aceptado en la plataforma. Adicionalmente puedes activar, en cualquier momento y desactivado por defecto, un "perfil de confianza público" que hace visible esta información para cualquier persona.</p>
+            <p><strong>Amigos, bloqueos y grupos.</strong> Puedes enviar y aceptar/rechazar solicitudes de amistad, y puedes bloquear o desbloquear a otros usuarios. El bloqueo es privado y asimétrico: un usuario que bloqueas no es notificado de que lo bloqueaste. Puedes crear grupos (por ejemplo, hogares o viajes compartidos) para dividir y llevar el control de gastos entre varios miembros, incluyendo una función de "saldar cuentas" para compensar los balances dentro del grupo.</p>
+            <p><strong>Información de método de pago.</strong> Opcionalmente puedes guardar tus propios datos de pago (por ejemplo, una cuenta bancaria o un número SINPE, con una etiqueta de texto libre) para que tus amigos sepan cómo pagarte. Esta información se muestra únicamente a la contraparte específica en el contexto de un cargo activo entre ustedes — no a tu lista de amigos en general ni públicamente.</p>
+            <p><strong>Notificaciones.</strong> Podemos enviarte notificaciones push, como recordatorios de pago. Estas son opcionales y puedes controlarlas en la configuración de tu dispositivo y de la app.</p>
+            <p><strong>Referidos.</strong> Operamos un programa de referidos mediante códigos de invitación. Cualquier término adicional para ese programa, si aplica, se presentará en el momento en que participes.</p>
+            <p><strong>Suscripciones.</strong> Podemos ofrecer un nivel "Pro" pagado con funciones adicionales. Si te suscribes, verás los precios y condiciones de facturación antes de que se te cobre, y aplican los términos estándar de suscripción (facturación recurrente hasta la cancelación, cancelación a través de la configuración de tu cuenta en la tienda de aplicaciones o dentro de la app, sin reembolsos parciales por períodos no utilizados, salvo lo requerido por ley o por la política de la tienda de aplicaciones).</p>
+
+            <h2>5. Uso aceptable</h2>
+            <p>Aceptas no:</p>
+            <ul>
+                <li>Usar Trust Orbit para acosar, defraudar o intimidar a otra persona, incluyendo la creación de cargos falsos o exagerados con la intención de dañar el puntaje de confianza de alguien;</li>
+                <li>Suplantar a otra persona o tergiversar tu identidad o afiliación;</li>
+                <li>Intentar acceder a la cuenta o los datos de otro usuario sin autorización;</li>
+                <li>Realizar ingeniería inversa, extraer datos (scraping) o interferir con el funcionamiento normal de la app;</li>
+                <li>Usar el servicio para cualquier propósito ilícito, incluyendo facilitar lavado de dinero, fraude o transacciones ilegales reales (recordando que Trust Orbit nunca toca los fondos — solo registra lo que los usuarios reportan);</li>
+                <li>Subir contenido que sea ilícito, abusivo o que infrinja los derechos de otra persona.</li>
+            </ul>
+            <p>Podemos suspender o cancelar cuentas que violen estos términos.</p>
+
+            <h2>6. Exenciones de responsabilidad</h2>
+            <p><strong>Trust Orbit se ofrece "tal cual" y "según disponibilidad", sin garantías de ningún tipo, expresas o implícitas</strong>, incluyendo garantías de comerciabilidad, idoneidad para un propósito particular y no infracción. No garantizamos que el servicio será ininterrumpido, libre de errores o seguro, ni que los puntajes de confianza, los registros de cargos u otros datos sean exactos o completos.</p>
+            <p><strong>Las disputas entre usuarios sobre dinero adeudado, pagado o recibido son entre esos usuarios.</strong> Trust Orbit es una herramienta de registro y reputación, no una parte de ninguna deuda, acuerdo o transacción entre usuarios, y no mediamos, arbitramos ni garantizamos la resolución de dichas disputas. Si tú y otro usuario no están de acuerdo sobre si existe una deuda o si fue pagada, deberán resolverlo entre ustedes (y, de ser necesario, por medios legales fuera de la app).</p>
+
+            <h2>7. Limitación de responsabilidad</h2>
+            <p>En la máxima medida permitida por la ley, Trust Orbit y sus directivos, empleados y afiliados no serán responsables por daños indirectos, incidentales, especiales, consecuentes o punitivos, ni por pérdida de dinero, ganancias, datos o reputación (goodwill), que surjan de o estén relacionados con tu uso del servicio — incluyendo pérdidas derivadas de una deuda que nunca fue realmente pagada, un cargo inexacto, o la confianza depositada en un puntaje de confianza. Nuestra responsabilidad total por cualquier reclamo relacionado con el servicio no excederá el mayor entre (a) el monto que nos pagaste en los doce meses previos al reclamo, o (b) $100 USD.</p>
+
+            <h2>8. Eliminación de cuenta</h2>
+            <p>Puedes eliminar tu cuenta en cualquier momento desde dentro de la app. Cuando lo hagas, consulta nuestro <a href="/privacy-es">Protocolo de Privacidad</a> para saber exactamente qué sucede con tus datos — en resumen, tu información de perfil personal se anonimiza, pero los registros de transacciones que involucran a otros usuarios se conservan de forma anonimizada para que el historial y el puntaje de confianza de esos usuarios permanezcan intactos.</p>
+
+            <h2>9. Propiedad intelectual</h2>
+            <p>La aplicación Trust Orbit, su diseño, logotipos y software subyacente son propiedad nuestra o de nuestros licenciantes y están protegidos por la ley de propiedad intelectual. Te otorgamos una licencia limitada, personal e intransferible para usar la app para su propósito previsto. Conservas la propiedad del contenido que envías (como tu foto de perfil o las descripciones de los cargos), pero nos otorgas una licencia para almacenarlo, mostrarlo y procesarlo según sea necesario para operar el servicio.</p>
+
+            <h2>10. Cambios a estos Términos</h2>
+            <p>Podemos actualizar estos Términos de vez en cuando. Si hacemos cambios significativos, te notificaremos dentro de la app o por correo electrónico antes de que entren en vigor. Continuar usando Trust Orbit después de que los cambios entren en vigor significa que aceptas los Términos actualizados.</p>
+
+            <h2>11. Terminación</h2>
+            <p>Puedes dejar de usar Trust Orbit y eliminar tu cuenta en cualquier momento. Podemos suspender o cancelar tu acceso si violas estos Términos o si discontinuamos el servicio, con aviso previo cuando sea razonablemente posible.</p>
+
+            <h2>12. Ley aplicable</h2>
+            <p>Estos Términos se rigen por las leyes de Costa Rica, sin considerar principios de conflicto de leyes. Cualquier disputa se resolverá en los tribunales de Costa Rica, salvo que la ley aplicable exija lo contrario.</p>
+
+            <h2>13. Contacto</h2>
+            <p>¿Preguntas sobre estos Términos? Contáctanos en <a href="mailto:kemridecr@icloud.com">kemridecr@icloud.com</a>.</p>
+        </section>
+    </div>
+</body>
+</html>

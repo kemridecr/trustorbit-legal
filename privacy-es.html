@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trust Orbit — Protocolo de Privacidad</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.8;
+            color: #1f2937;
+            background: #f9fafb;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: white;
+        }
+        header {
+            margin-bottom: 40px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 30px;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #000;
+        }
+        .meta {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.6;
+        }
+        h2 {
+            font-size: 1.3rem;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            color: #0066cc;
+        }
+        h2:first-of-type {
+            margin-top: 0;
+        }
+        p {
+            margin-bottom: 15px;
+        }
+        strong {
+            font-weight: 600;
+            color: #000;
+        }
+        em {
+            font-style: italic;
+        }
+        ul {
+            margin: 15px 0 15px 30px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #0066cc;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            h2 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← Volver a Documentos Legales</a>
+
+        <header>
+            <h1>Trust Orbit — Protocolo de Privacidad</h1>
+            <div class="meta">
+                <p><strong>Fecha de vigencia:</strong> 9 de julio de 2026</p>
+                <p><strong>Empresa:</strong> Kenneth Steven Zamora Cabezas, persona física (sin entidad legal separada constituida actualmente), constituida conforme a las leyes de Costa Rica ("Trust Orbit", "nosotros" o "nuestro")</p>
+                <p><strong>Contacto:</strong> kemridecr@icloud.com</p>
+            </div>
+        </header>
+
+        <section>
+            <h2>1. Introducción</h2>
+            <p>Este Protocolo de Privacidad explica qué información recopila Trust Orbit, por qué la recopilamos, quién puede verla, cuánto tiempo la conservamos y qué opciones tienes — incluyendo una divulgación importante sobre qué sucede con tus datos si eliminas tu cuenta. Aplica a tu uso de la aplicación Trust Orbit.</p>
+
+            <h2>2. Información que recopilamos</h2>
+            <p><strong>Información de la cuenta.</strong> Correo electrónico y contraseña (gestionados a través de Supabase Auth, nuestro proveedor de autenticación), nombre de usuario, nombre completo opcional y foto de perfil (avatar) opcional.</p>
+            <p><strong>Datos de registro financiero adyacente (no pagos reales).</strong> Cuando usas la app, recopilamos los "cargos" que tú o tus amigos crean — quién le debe a quién, por qué y cuánto — junto con el estado de pago/confirmación y las marcas de tiempo. También recopilamos datos de grupos y de "saldar cuentas" si usas las funciones de gastos grupales. Para ser claros: esto es un registro de lo que tú nos indicas que ocurrió; <strong>ningún dinero real ni datos de transacciones de tarjetas o bancarias pasan a través de Trust Orbit</strong>, porque los pagos ocurren completamente fuera de la app.</p>
+            <p><strong>Puntaje de confianza y datos de reputación.</strong> Calculamos y almacenamos tu puntaje de confianza, etiqueta de nivel, insignias y rachas con base en tu historial de pagos confirmados dentro de la app.</p>
+            <p><strong>Detalles de método de pago que decides agregar.</strong> Si opcionalmente agregas tu propia cuenta bancaria, número SINPE u otros datos de pago similares (con una etiqueta de texto libre) para que tus amigos sepan cómo pagarte, almacenamos esa información.</p>
+            <p><strong>Datos del grafo social.</strong> Solicitudes de amistad, amigos aceptados y bloqueos (incluyendo a quién has bloqueado — esto nunca se comparte con el usuario bloqueado).</p>
+            <p><strong>Datos del dispositivo y de notificaciones.</strong> Si activas las notificaciones push, recopilamos un token de notificación del dispositivo para poder enviarte recordatorios. Esto no es obligatorio — es opcional y puedes controlarlo en tu configuración.</p>
+            <p><strong>Datos de referidos.</strong> Si usas o generas un código de referido/invitación, registramos ese uso para atribuir los referidos.</p>
+            <p><strong>No recopilamos datos biométricos.</strong> Si activas el bloqueo de la app con Face ID o huella digital, esa autenticación ocurre completamente en tu dispositivo utilizando las propias APIs biométricas del sistema operativo de tu teléfono. Los servidores de Trust Orbit nunca reciben, ven, transmiten ni almacenan datos biométricos — los datos de tu rostro o huella dactilar nunca salen de tu dispositivo y nunca son conocidos por nosotros.</p>
+            <p><strong>Actualmente no usamos IA para procesar tus datos personales.</strong> Trust Orbit no procesa tus datos mediante sistemas de IA/aprendizaje automático como parte del producto en producción.</p>
+            <p><strong>No vendemos tus datos ni los usamos para segmentación publicitaria</strong>, y no tenemos relaciones con corredores de datos (data brokers).</p>
+
+            <h2>3. Cómo usamos tu información</h2>
+            <p>Usamos la información anterior para:</p>
+            <ul>
+                <li>Crear y mantener tu cuenta y autenticarte;</li>
+                <li>Operar las funciones principales de la app — cargos, confirmaciones, puntajes de confianza, amigos, grupos y el intercambio de información de métodos de pago entre contrapartes;</li>
+                <li>Enviarte notificaciones que hayas aceptado recibir;</li>
+                <li>Registrar y acreditar referidos;</li>
+                <li>Mantener la seguridad e integridad del servicio (por ejemplo, detectar abusos o reportes de fraude);</li>
+                <li>Mejorar y mantener la app; y</li>
+                <li>Cumplir con obligaciones legales.</li>
+            </ul>
+
+            <h2>4. Quién puede ver tu información</h2>
+            <p>La visibilidad en Trust Orbit es deliberadamente limitada y específica según la función:</p>
+            <ul>
+                <li><strong>Puntaje de confianza, insignias y rachas:</strong> visibles para tus amigos aceptados por defecto. Visibles públicamente solo si activas la configuración opcional de "perfil de confianza público" (desactivada por defecto) — tú controlas esto en cualquier momento.</li>
+                <li><strong>Detalles del método de pago:</strong> visibles únicamente para la contraparte específica en un cargo activo contigo — nunca para tu lista de amigos en general, ni públicamente.</li>
+                <li><strong>Cargos y gastos grupales:</strong> visibles para las personas directamente involucradas en ese cargo o grupo.</li>
+                <li><strong>Bloqueos:</strong> privados. Si bloqueas a alguien, esa persona no es notificada de que fue bloqueada.</li>
+                <li><strong>Perfil básico (nombre de usuario, avatar, nombre):</strong> visible según corresponda para amigos, miembros de grupo y contrapartes conforme a las funciones anteriores.</li>
+            </ul>
+
+            <h2>5. Proveedores de servicios externos</h2>
+            <p>Usamos <strong>Supabase</strong> (que provee nuestra base de datos, infraestructura de backend y autenticación) para almacenar y procesar los datos descritos anteriormente en nuestro nombre. Supabase actúa como nuestro procesador de datos/proveedor de infraestructura — no utiliza tus datos para sus propios fines publicitarios o de marketing. No vendemos, alquilamos ni compartimos de otro modo tu información personal con corredores de datos ni anunciantes.</p>
+
+            <h2>6. Retención de datos y eliminación de cuenta — Por favor lee esta sección con atención</h2>
+            <p>Puedes eliminar tu cuenta en cualquier momento desde dentro de la app. Esto es exactamente lo que sucede cuando lo haces, porque es un poco diferente de un flujo típico de "eliminar todo":</p>
+            <ul>
+                <li><strong>Tu perfil personal se anonimiza, no se borra por completo.</strong> Tu nombre de usuario, nombre completo, foto de perfil y los detalles de método de pago almacenados se eliminan/anonimizan de modo que ya no puedan identificarte.</li>
+                <li><strong>Los registros subyacentes de cargos/transacciones se conservan, en forma anonimizada.</strong> Los cargos, confirmaciones e historial de gastos grupales que involucran a <em>otros</em> usuarios no se eliminan por completo. Esto se debe a que un cargo o un pago confirmado es un registro compartido entre dos personas — si fuiste el deudor en un pago confirmado, el historial de transacciones y el puntaje de confianza del propio acreedor dependen legítimamente de que ese registro permanezca intacto, y una parte no debería poder borrar unilateralmente el historial de la otra. Por eso estos registros se conservan como una "lápida" (tombstone) anonimizada (se elimina tu información identificable, pero el hecho de que ocurrió una transacción, y su efecto en el puntaje de confianza de la otra parte, permanece).</li>
+            </ul>
+            <p>En la práctica, esto significa que: <strong>eliminar tu cuenta borra tu identidad personal de la plataforma, pero no borra retroactivamente el efecto de tu historial de transacciones en las cuentas de otros usuarios.</strong></p>
+            <p>Si tienes preguntas o inquietudes sobre esto antes de eliminar tu cuenta, contáctanos en kemridecr@icloud.com.</p>
+
+            <h2>7. Tus derechos</h2>
+            <p>Dependiendo de dónde vivas, podrías tener derecho a acceder, corregir, exportar o solicitar la eliminación de tu información personal, así como a oponerte o restringir cierto procesamiento. Para ejercer estos derechos:</p>
+            <ul>
+                <li><strong>Acceso/exportación:</strong> Puedes ver la mayoría de tus datos directamente en la app. Para solicitar una exportación completa, contáctanos en kemridecr@icloud.com.</li>
+                <li><strong>Corrección:</strong> Puedes actualizar la información de tu perfil directamente en la app en cualquier momento.</li>
+                <li><strong>Eliminación:</strong> Usa la función de eliminación de cuenta dentro de la app, entendiendo el comportamiento de retención descrito en la Sección 6 anterior. Para una solicitud de eliminación más allá de lo que ofrece el flujo dentro de la app, contáctanos en kemridecr@icloud.com.</li>
+            </ul>
+            <p>Responderemos a las solicitudes dentro de un plazo razonable y conforme a la ley aplicable.</p>
+
+            <h2>8. Seguridad</h2>
+            <p>Utilizamos salvaguardas administrativas, técnicas y organizativas razonables diseñadas para proteger tu información, incluyendo depender de la seguridad de infraestructura y los controles de acceso de Supabase. Sin embargo, ningún método de transmisión o almacenamiento es 100% seguro, y no podemos garantizar una seguridad absoluta.</p>
+
+            <h2>9. Privacidad de menores</h2>
+            <p>Trust Orbit está destinado a usuarios de 15 años o más. No recopilamos conscientemente información personal de personas menores de 15 años. Si descubrimos que hemos recopilado información de alguien menor de 15 años, la eliminaremos. Los usuarios entre 15 años y la mayoría de edad en su jurisdicción solo deben usar Trust Orbit con el permiso de su madre, padre, o tutor legal.</p>
+
+            <h2>10. Transferencias internacionales de datos</h2>
+            <p>Tu información puede almacenarse y procesarse en países distintos al tuyo. Nuestro proveedor de infraestructura, Supabase, actualmente aloja nuestra base de datos y backend en Estados Unidos (región de AWS us-east-2).</p>
+
+            <h2>11. Cambios a este Protocolo</h2>
+            <p>Podemos actualizar este Protocolo de Privacidad de vez en cuando. Si hacemos cambios significativos, te notificaremos dentro de la app o por correo electrónico antes de que entren en vigor. La "Fecha de vigencia" en la parte superior de este documento reflejará la revisión más reciente.</p>
+
+            <h2>12. Ley aplicable</h2>
+            <p>Este Protocolo se rige por las leyes de Costa Rica, sin considerar principios de conflicto de leyes.</p>
+
+            <h2>13. Contáctanos</h2>
+            <p>¿Preguntas, inquietudes o solicitudes sobre este Protocolo de Privacidad? Contáctanos en <a href="mailto:kemridecr@icloud.com">kemridecr@icloud.com</a>.</p>
+        </section>
+    </div>
+</body>
+</html>

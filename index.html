@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trust Orbit — Legal Documents</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: #f9fafb;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #000;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: #666;
+        }
+        .lang-selector {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .lang-selector button {
+            background: #f0f0f0;
+            border: 2px solid #ddd;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+        .lang-selector button.active {
+            background: #0066cc;
+            color: white;
+            border-color: #0066cc;
+        }
+        .lang-selector button:hover {
+            border-color: #0066cc;
+        }
+        .documents {
+            display: grid;
+            gap: 20px;
+        }
+        .doc-card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.2s;
+        }
+        .doc-card:hover {
+            border-color: #0066cc;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        .doc-card h2 {
+            margin-bottom: 15px;
+            color: #0066cc;
+        }
+        .doc-card p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .doc-card a {
+            display: inline-block;
+            background: #0066cc;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .doc-card a:hover {
+            background: #0052a3;
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #e5e7eb;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .effective-date {
+            font-size: 0.9rem;
+            color: #999;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Trust Orbit</h1>
+            <p class="subtitle">Legal Documents</p>
+        </header>
+
+        <div class="lang-selector">
+            <button class="active" onclick="switchLang('en')">English</button>
+            <button onclick="switchLang('es')">Español</button>
+        </div>
+
+        <div class="documents">
+            <div class="doc-card">
+                <h2 id="terms-title">Terms of Service</h2>
+                <p id="terms-desc">Read our complete terms of service and how the app works.</p>
+                <div class="effective-date" id="terms-date">Effective: July 9, 2026</div>
+                <a href="#" id="terms-link" onclick="openDoc('terms'); return false;">Read Full Document →</a>
+            </div>
+
+            <div class="doc-card">
+                <h2 id="privacy-title">Privacy Policy</h2>
+                <p id="privacy-desc">Learn about how we collect, use, and protect your data.</p>
+                <div class="effective-date" id="privacy-date">Effective: July 9, 2026</div>
+                <a href="#" id="privacy-link" onclick="openDoc('privacy'); return false;">Read Full Document →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Trust Orbit — Kenneth Steven Zamora Cabezas, Costa Rica</p>
+            <p>Contact: <a href="mailto:kemridecr@icloud.com" style="color: #0066cc; text-decoration: none;">kemridecr@icloud.com</a></p>
+        </footer>
+    </div>
+
+    <script>
+        let currentLang = 'en';
+
+        const translations = {
+            en: {
+                'terms-title': 'Terms of Service',
+                'terms-desc': 'Read our complete terms of service and how the app works.',
+                'privacy-title': 'Privacy Policy',
+                'privacy-desc': 'Learn about how we collect, use, and protect your data.',
+            },
+            es: {
+                'terms-title': 'Términos de Servicio',
+                'terms-desc': 'Lee nuestros términos de servicio completos y cómo funciona la app.',
+                'privacy-title': 'Política de Privacidad',
+                'privacy-desc': 'Aprende cómo recopilamos, utilizamos y protegemos tus datos.',
+            }
+        };
+
+        function switchLang(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-selector button').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+
+            Object.entries(translations[lang]).forEach(([id, text]) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = text;
+            });
+        }
+
+        function openDoc(type) {
+            const filename = `${type}-${currentLang}.html`;
+            window.location.href = filename;
+        }
+    </script>
+</body>
+</html>

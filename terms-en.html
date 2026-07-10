@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trust Orbit — Terms of Service</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.8;
+            color: #1f2937;
+            background: #f9fafb;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: white;
+        }
+        header {
+            margin-bottom: 40px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 30px;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #000;
+        }
+        .meta {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.6;
+        }
+        h2 {
+            font-size: 1.3rem;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            color: #0066cc;
+        }
+        h2:first-of-type {
+            margin-top: 0;
+        }
+        p {
+            margin-bottom: 15px;
+        }
+        strong {
+            font-weight: 600;
+            color: #000;
+        }
+        ul {
+            margin: 15px 0 15px 30px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #0066cc;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            h2 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← Back to Legal Documents</a>
+
+        <header>
+            <h1>Trust Orbit — Terms of Service</h1>
+            <div class="meta">
+                <p><strong>Effective date:</strong> July 9, 2026</p>
+                <p><strong>Company:</strong> Kenneth Steven Zamora Cabezas, an individual (no separate legal entity currently formed), organized under the laws of Costa Rica ("Trust Orbit," "we," "us," or "our")</p>
+                <p><strong>Contact:</strong> kemridecr@icloud.com</p>
+            </div>
+        </header>
+
+        <section>
+            <h2>1. What Trust Orbit Is (and Isn't)</h2>
+            <p>Trust Orbit is a social ledger and reputation app for tracking informal debts between people who know each other — friends, family, roommates, and similar groups. It lets you record who owes what to whom for shared expenses, mark when a debt has been paid, confirm when payment has been received, and build a "trust score" from that confirmed history.</p>
+            <p><strong>Trust Orbit is not a payment processor, bank, money transmitter, or escrow service.</strong> No money moves through the app, ever. When you record a "charge" in Trust Orbit, you and the other person still have to settle up yourselves — in cash, by bank transfer, via SINPE, or by whatever method you agree on, entirely outside the app. Trust Orbit only tracks that this happened and stores each side's confirmation of it.</p>
+            <p>Because we never touch the money, we have no ability to verify that a payment actually occurred, no ability to reverse or dispute a transaction, and no visibility into your bank accounts or payment history outside of what you and your counterparty tell the app.</p>
+
+            <h2>2. Eligibility</h2>
+            <p>You must be at least 15 years old to create a Trust Orbit account or use the service. By creating an account, you confirm that you meet this requirement. Trust Orbit is not directed at, and does not knowingly collect information from, anyone under 15. If you are between 15 and the age of majority in your jurisdiction, you confirm that you have your parent's or legal guardian's permission to use Trust Orbit.</p>
+
+            <h2>3. Your Account</h2>
+            <ul>
+                <li>You need an email address and password to register (via our authentication provider, Supabase Auth). You may also add a username, a full name, and an avatar photo.</li>
+                <li>You're responsible for keeping your login credentials confidential and for all activity that happens under your account.</li>
+                <li>You agree to provide accurate information and to keep it up to date.</li>
+                <li>Notify us promptly at kemridecr@icloud.com if you believe your account has been compromised.</li>
+            </ul>
+
+            <h2>4. How the Service Works</h2>
+            <p><strong>Charges.</strong> Any user (the "creditor") can record a charge stating that another user (the "debtor") owes them money for something. The debtor can mark the charge "paid" once they've paid outside the app; the creditor then confirms they received it. A charge only affects trust scores once both sides have confirmed it. You are responsible for the accuracy of any charge you create — Trust Orbit does not independently verify that a charge is legitimate.</p>
+            <p><strong>Trust score.</strong> We calculate a numeric trust score (1.0–5.0) and a tier label (Excellent, Very Good, Good, Fair, Needs Improvement) from your history of mutually confirmed payments — things like your on-time payment percentage and confirmed payment count. This score is a reputational signal based on self-reported, mutually-confirmed activity inside the app. <strong>It is not a credit score, not a financial background check, and not a guarantee of anyone's reliability, solvency, or trustworthiness in real life.</strong> Don't rely on it as your sole basis for extending credit or trust to another person.</p>
+            <p><strong>Visibility.</strong> By default, your trust score and related badges/streaks are visible to the friends you've accepted on the platform. You can additionally opt in — at any time, off by default — to a "public trust profile" that makes this information visible to anyone.</p>
+            <p><strong>Friends, blocking, and groups.</strong> You can send and accept/reject friend requests, and you can block or unblock other users. Blocking is private and asymmetric: a user you block is not notified that you blocked them. You can create groups (for example, shared households or trips) to split and track expenses among multiple members, including a "settle up" feature to net out balances within the group.</p>
+            <p><strong>Payment method info.</strong> You may optionally store your own payment details (for example, a bank account or SINPE number, with a free-text label) so that friends know how to pay you. This information is shown only to a specific counterparty in the context of an active charge between you — not to your friends list generally and not publicly.</p>
+            <p><strong>Notifications.</strong> We may send you push notifications, such as payment reminders. These are optional and you can control them in your device and app settings.</p>
+            <p><strong>Referrals.</strong> We operate a referral program using invite codes. Additional terms for that program, if any, will be presented at the time you participate.</p>
+            <p><strong>Subscriptions.</strong> We may offer a paid "Pro" tier with additional features. If you subscribe, you'll see pricing and billing terms before you're charged, and standard subscription terms apply (recurring billing until cancelled, cancellation through your app store account settings or in-app, no partial refunds for unused periods except as required by law or app store policy).</p>
+
+            <h2>5. Acceptable Use</h2>
+            <p>You agree not to:</p>
+            <ul>
+                <li>Use Trust Orbit to harass, defraud, or intimidate another person, including by creating fake or exaggerated charges intended to damage someone's trust score;</li>
+                <li>Impersonate another person or misrepresent your identity or affiliation;</li>
+                <li>Attempt to access another user's account or data without authorization;</li>
+                <li>Reverse-engineer, scrape, or interfere with the app's normal operation;</li>
+                <li>Use the service for any unlawful purpose, including facilitating actual money laundering, fraud, or illegal transactions (remembering that Trust Orbit itself never touches funds — it only records what users report);</li>
+                <li>Upload content that is unlawful, abusive, or infringes someone else's rights.</li>
+            </ul>
+            <p>We may suspend or terminate accounts that violate these terms.</p>
+
+            <h2>6. Disclaimers</h2>
+            <p><strong>Trust Orbit is provided "as is" and "as available," without warranties of any kind, express or implied</strong>, including warranties of merchantability, fitness for a particular purpose, and non-infringement. We don't warrant that the service will be uninterrupted, error-free, or secure, or that the trust scores, charge records, or any other data will be accurate or complete.</p>
+            <p><strong>Disputes between users about money owed, paid, or received are between those users.</strong> Trust Orbit is a record-keeping and reputation tool, not a party to any debt, agreement, or transaction between users, and we do not mediate, arbitrate, or guarantee the resolution of such disputes. If you and another user disagree about whether a debt exists or was paid, you'll need to resolve that between yourselves (and, if necessary, through legal means outside the app).</p>
+
+            <h2>7. Limitation of Liability</h2>
+            <p>To the maximum extent permitted by law, Trust Orbit and its officers, employees, and affiliates will not be liable for any indirect, incidental, special, consequential, or punitive damages, or for any loss of money, profits, data, or goodwill, arising out of or related to your use of the service — including losses arising from a debt that was never actually paid, a charge that was inaccurate, or reliance on a trust score. Our total liability for any claim relating to the service will not exceed the greater of (a) the amount you paid us in the twelve months before the claim, or (b) $100 USD.</p>
+
+            <h2>8. Account Deletion</h2>
+            <p>You can delete your account at any time from within the app. When you do, see our <a href="/privacy">Privacy Policy</a> for exactly what happens to your data — in short, your personal profile information is anonymized, but transaction records that involve other users are retained in anonymized form so that those users' own histories and trust scores stay intact.</p>
+
+            <h2>9. Intellectual Property</h2>
+            <p>The Trust Orbit app, its design, logos, and underlying software are owned by us or our licensors and protected by intellectual property law. We grant you a limited, personal, non-transferable license to use the app for its intended purpose. You retain ownership of the content you submit (like your profile photo or charge descriptions), but you grant us a license to store, display, and process it as needed to operate the service.</p>
+
+            <h2>10. Changes to These Terms</h2>
+            <p>We may update these Terms from time to time. If we make material changes, we'll notify you in the app or by email before they take effect. Continuing to use Trust Orbit after changes take effect means you accept the updated Terms.</p>
+
+            <h2>11. Termination</h2>
+            <p>You may stop using Trust Orbit and delete your account at any time. We may suspend or terminate your access if you violate these Terms or if we discontinue the service, with notice where reasonably possible.</p>
+
+            <h2>12. Governing Law</h2>
+            <p>These Terms are governed by the laws of Costa Rica, without regard to conflict-of-law principles. Any disputes will be resolved in the courts of Costa Rica, unless applicable law requires otherwise.</p>
+
+            <h2>13. Contact</h2>
+            <p>Questions about these Terms? Reach us at <a href="mailto:kemridecr@icloud.com">kemridecr@icloud.com</a>.</p>
+        </section>
+    </div>
+</body>
+</html>
