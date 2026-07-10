@@ -55,7 +55,7 @@
             scroll-behavior: smooth;
         }
 
-        #features, #security, #faq, #legal, #download {
+        #features, #security, #faq, #legal, #download, #petorbit {
             scroll-margin-top: 90px;
         }
 
@@ -561,6 +561,70 @@
             line-height: 1.7;
         }
 
+        /* PetOrbit section */
+        .petorbit-card {
+            max-width: 780px;
+            margin: 0 auto;
+            display: flex;
+            gap: 28px;
+            align-items: flex-start;
+            padding: 36px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, var(--surface) 0%, var(--bg-alt) 100%);
+            border: 1px solid var(--border-soft);
+        }
+
+        .petorbit-icon {
+            flex-shrink: 0;
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            background: rgba(139, 92, 246, 0.12);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .petorbit-content h3 {
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .petorbit-content > p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .petorbit-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .petorbit-features li {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .petorbit-content .cta-button {
+            font-size: 0.88rem;
+        }
+
+        @media (max-width: 600px) {
+            .petorbit-card {
+                flex-direction: column;
+                padding: 28px 22px;
+            }
+        }
+
         /* Legal section */
         .legal-grid {
             display: grid;
@@ -908,6 +972,7 @@
                 <li><a href="#features" data-i18n="nav.features">Features</a></li>
                 <li><a href="#security" data-i18n="nav.security">Security</a></li>
                 <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
+                <li><a href="#petorbit" data-i18n="nav.petorbit">PetOrbit</a></li>
                 <li><a href="#legal" data-i18n="nav.legal">Legal</a></li>
             </ul>
             <div class="nav-right">
@@ -1105,6 +1170,28 @@
         </div>
     </section>
 
+    <!-- PetOrbit -->
+    <section class="section" id="petorbit">
+        <div class="section-head">
+            <div class="kicker" data-i18n="petorbit.kicker">Orbit Labs</div>
+            <h2 data-i18n="petorbit.title">Also Building: PetOrbit</h2>
+            <p data-i18n="petorbit.lead">A digital identity for pets, from the same team behind Trust Orbit.</p>
+        </div>
+        <div class="petorbit-card">
+            <div class="petorbit-icon">🐾</div>
+            <div class="petorbit-content">
+                <h3 data-i18n="petorbit.name">PetOrbit</h3>
+                <p data-i18n="petorbit.body">NFC Smart Tags that link to your pet's public profile. If they're ever lost, anyone who finds them can scan the tag — no app required — and reach you instantly with their location.</p>
+                <ul class="petorbit-features">
+                    <li data-i18n="petorbit.f1">📍 Lost &amp; found reports with a nearby map</li>
+                    <li data-i18n="petorbit.f2">🏷️ One NFC/QR tag, one public pet profile</li>
+                    <li data-i18n="petorbit.f3">🩺 Medical info &amp; emergency contacts, private by default</li>
+                </ul>
+                <a href="https://www.instagram.com/_petorbit_/" target="_blank" rel="noopener noreferrer" class="cta-button" data-i18n="petorbit.cta">Follow @_petorbit_ on Instagram</a>
+            </div>
+        </div>
+    </section>
+
     <!-- Legal -->
     <section class="section" id="legal">
         <div class="section-head">
@@ -1143,6 +1230,7 @@
                     <li><a href="#features" data-i18n="nav.features">Features</a></li>
                     <li><a href="#security" data-i18n="nav.security">Security</a></li>
                     <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
+                    <li><a href="#petorbit" data-i18n="nav.petorbit">PetOrbit</a></li>
                     <li><a href="/terms-en.html" data-i18n="footer.terms">Terms</a></li>
                     <li><a href="/privacy-en.html" data-i18n="footer.privacy">Privacy</a></li>
                     <li><a href="mailto:kemridecr@icloud.com" data-i18n="footer.contact">Contact</a></li>
@@ -1164,7 +1252,7 @@
 
         const translations = {
             en: {
-                'nav.features': 'Features', 'nav.security': 'Security', 'nav.faq': 'FAQ', 'nav.legal': 'Legal', 'nav.cta': 'Get the App',
+                'nav.features': 'Features', 'nav.security': 'Security', 'nav.faq': 'FAQ', 'nav.petorbit': 'PetOrbit', 'nav.legal': 'Legal', 'nav.cta': 'Get the App',
                 'hero.eyebrow': 'In private beta · join the waitlist',
                 'hero.title': 'Build <span class="accent">Trust</span> Through Payments',
                 'hero.lead': 'Track shared expenses, confirm payments, and build a reputation with friends and family — without any money ever passing through the app.',
@@ -1194,6 +1282,10 @@
                 'faqq3': 'Is Trust Orbit free?', 'faqa3': 'Yes, Trust Orbit is free to download and use. An optional Pro tier with additional features may be offered in the future.',
                 'faqq4': 'What is a "trust score"?', 'faqa4': "A reputational signal (1.0–5.0) based on your history of mutually confirmed payments inside the app. It's not a credit score or a financial background check.",
                 'faqq5': 'Who can see my information?', 'faqa5': "By default, your trust score is visible only to friends you've accepted. Payment method details are shown only to the counterparty on an active charge — never publicly.",
+                'petorbit.kicker': 'Orbit Labs', 'petorbit.title': 'Also Building: PetOrbit', 'petorbit.lead': 'A digital identity for pets, from the same team behind Trust Orbit.',
+                'petorbit.name': 'PetOrbit', 'petorbit.body': "NFC Smart Tags that link to your pet's public profile. If they're ever lost, anyone who finds them can scan the tag — no app required — and reach you instantly with their location.",
+                'petorbit.f1': '📍 Lost &amp; found reports with a nearby map', 'petorbit.f2': '🏷️ One NFC/QR tag, one public pet profile', 'petorbit.f3': '🩺 Medical info &amp; emergency contacts, private by default',
+                'petorbit.cta': 'Follow @_petorbit_ on Instagram',
                 'legal.kicker': 'Legal', 'legal.title': 'Legal Documents',
                 'legal1.title': '📋 Terms of Service', 'legal1.body': 'Everything you need to know about using Trust Orbit and how the app works.',
                 'legal2.title': '🔒 Privacy Policy', 'legal2.body': 'How we collect, use, and protect your personal information and data.',
@@ -1201,7 +1293,7 @@
                 'footer.company': 'Trust Orbit · Costa Rica', 'footer.rights': 'All rights reserved.',
             },
             es: {
-                'nav.features': 'Funciones', 'nav.security': 'Seguridad', 'nav.faq': 'Preguntas', 'nav.legal': 'Legal', 'nav.cta': 'Obtener la App',
+                'nav.features': 'Funciones', 'nav.security': 'Seguridad', 'nav.faq': 'Preguntas', 'nav.petorbit': 'PetOrbit', 'nav.legal': 'Legal', 'nav.cta': 'Obtener la App',
                 'hero.eyebrow': 'En beta privada · únete a la lista de espera',
                 'hero.title': 'Construye <span class="accent">Confianza</span> a Través de Pagos',
                 'hero.lead': 'Registra gastos compartidos, confirma pagos y construye una reputación con amigos y familia — sin que ningún dinero pase jamás por la app.',
@@ -1231,6 +1323,10 @@
                 'faqq3': '¿Trust Orbit es gratis?', 'faqa3': 'Sí, Trust Orbit es gratis para descargar y usar. En el futuro podríamos ofrecer un nivel Pro opcional con funciones adicionales.',
                 'faqq4': '¿Qué es un "puntaje de confianza"?', 'faqa4': 'Una señal reputacional (1.0–5.0) basada en tu historial de pagos confirmados mutuamente dentro de la app. No es un puntaje crediticio ni una verificación de antecedentes financieros.',
                 'faqq5': '¿Quién puede ver mi información?', 'faqa5': 'Por defecto, tu puntaje de confianza es visible solo para los amigos que has aceptado. Los detalles del método de pago se muestran solo a la contraparte de un cargo activo — nunca públicamente.',
+                'petorbit.kicker': 'Orbit Labs', 'petorbit.title': 'También Estamos Construyendo: PetOrbit', 'petorbit.lead': 'Una identidad digital para mascotas, del mismo equipo detrás de Trust Orbit.',
+                'petorbit.name': 'PetOrbit', 'petorbit.body': 'Smart Tags NFC que enlazan al perfil público de tu mascota. Si alguna vez se pierde, quien la encuentre puede escanear la placa — sin necesidad de instalar ninguna app — y contactarte al instante con su ubicación.',
+                'petorbit.f1': '📍 Reportes de mascotas perdidas/encontradas con mapa cercano', 'petorbit.f2': '🏷️ Una placa NFC/QR, un perfil público de mascota', 'petorbit.f3': '🩺 Información médica y contactos de emergencia, privados por defecto',
+                'petorbit.cta': 'Síguenos @_petorbit_ en Instagram',
                 'legal.kicker': 'Legal', 'legal.title': 'Documentos Legales',
                 'legal1.title': '📋 Términos de Servicio', 'legal1.body': 'Todo lo que necesitas saber sobre el uso de Trust Orbit y cómo funciona la app.',
                 'legal2.title': '🔒 Política de Privacidad', 'legal2.body': 'Cómo recopilamos, usamos y protegemos tu información personal y datos.',
