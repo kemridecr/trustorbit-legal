@@ -3,172 +3,518 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trust Orbit — Legal Documents</title>
+    <title>Trust Orbit — Build Trust Through Payments</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563EB;
+            --primary-light: #0EA5E9;
+            --dark-bg: #0b1326;
+            --dark-surface: #171f33;
+            --slate-900: #0f172a;
+            --slate-100: #f1f5f9;
+            --white: #ffffff;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Inter', system-ui, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            color: var(--text-dark);
             line-height: 1.6;
-            color: #1f2937;
-            background: #f9fafb;
+            overflow-x: hidden;
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
+
+        /* Header */
         header {
-            text-align: center;
-            margin-bottom: 50px;
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            color: #000;
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 80px;
         }
-        .subtitle {
-            font-size: 1.1rem;
-            color: #666;
-        }
-        .lang-selector {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .lang-selector button {
-            background: #f0f0f0;
-            border: 2px solid #ddd;
-            padding: 10px 20px;
-            margin: 0 10px;
-            border-radius: 6px;
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.2s;
+            text-decoration: none;
+            color: var(--text-dark);
         }
-        .lang-selector button.active {
-            background: #0066cc;
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
-            border-color: #0066cc;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
         }
-        .lang-selector button:hover {
-            border-color: #0066cc;
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
         }
-        .documents {
-            display: grid;
-            gap: 20px;
+
+        .logo-text .primary {
+            color: var(--primary);
         }
-        .doc-card {
-            background: white;
-            padding: 30px;
+
+        nav .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        nav .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        nav .cta-button {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 10px 24px;
             border-radius: 8px;
-            border: 1px solid #e5e7eb;
-            transition: all 0.2s;
-        }
-        .doc-card:hover {
-            border-color: #0066cc;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-        .doc-card h2 {
-            margin-bottom: 15px;
-            color: #0066cc;
-        }
-        .doc-card p {
-            color: #666;
-            margin-bottom: 15px;
-        }
-        .doc-card a {
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
             display: inline-block;
-            background: #0066cc;
+        }
+
+        nav .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            nav .nav-links {
+                display: none;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero .buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .hero .button {
+            padding: 14px 32px;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+        }
+
+        .hero .button.primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+        }
+
+        .hero .button.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(37, 99, 235, 0.3);
+        }
+
+        .hero .button.secondary {
+            background: white;
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .hero .button.secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Features Section */
+        .features {
+            max-width: 1200px;
+            margin: 100px auto 0;
+            padding: 80px 20px;
+            background: white;
+            border-radius: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        .features h2 {
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            padding: 40px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(37, 99, 235, 0.1);
+        }
+
+        .feature-card h3 {
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* Legal Section */
+        .legal-section {
+            max-width: 1200px;
+            margin: 100px auto 0;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, var(--slate-900), var(--dark-surface));
+            border-radius: 20px;
+            color: #e0e7ff;
+            margin-left: 20px;
+            margin-right: 20px;
+            margin-bottom: 40px;
+        }
+
+        .legal-section h2 {
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .legal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .legal-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 32px;
+            border-radius: 12px;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .legal-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(37, 99, 235, 0.5);
+        }
+
+        .legal-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--primary-light);
+        }
+
+        .legal-card p {
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .legal-card a {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: white;
             padding: 10px 20px;
             border-radius: 6px;
             text-decoration: none;
-            transition: background 0.2s;
+            font-weight: 600;
+            transition: transform 0.3s;
         }
-        .doc-card a:hover {
-            background: #0052a3;
+
+        .legal-card a:hover {
+            transform: translateY(-2px);
         }
+
+        /* Footer */
         footer {
+            background: var(--slate-900);
+            color: #cbd5e1;
+            padding: 40px 20px;
             text-align: center;
-            margin-top: 50px;
-            padding-top: 30px;
-            border-top: 1px solid #e5e7eb;
-            color: #666;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer p {
+            margin-bottom: 12px;
             font-size: 0.9rem;
         }
-        .effective-date {
+
+        footer a {
+            color: var(--primary-light);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Language Selector */
+        .lang-selector {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 30;
+            display: flex;
+            gap: 8px;
+            background: white;
+            padding: 8px;
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .lang-selector button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
             font-size: 0.9rem;
-            color: #999;
-            margin-top: 5px;
+        }
+
+        .lang-selector button.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+        }
+
+        .lang-selector button:not(.active) {
+            background: #f1f5f9;
+            color: var(--text-dark);
+        }
+
+        .lang-selector button:hover {
+            transform: translateY(-1px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero, .features, .legal-section {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                height: 60px;
+            }
+
+            nav .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 60px 20px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .features, .legal-section {
+                padding: 40px 20px;
+                margin-left: 0;
+                margin-right: 0;
+            }
+
+            .lang-selector {
+                bottom: 16px;
+                right: 16px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Trust Orbit</h1>
-            <p class="subtitle">Legal Documents</p>
-        </header>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="/" class="logo">
+                <div class="logo-icon">🛡️</div>
+                <div class="logo-text">Trust <span class="primary">Orbit</span></div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#legal">Legal</a></li>
+                <li><a href="mailto:kemridecr@icloud.com">Support</a></li>
+            </ul>
+            <a href="#legal" class="cta-button">Get Started</a>
+        </nav>
+    </header>
 
-        <div class="lang-selector">
-            <button class="active" onclick="switchLang('en')">English</button>
-            <button onclick="switchLang('es')">Español</button>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Build Trust Through Payments</h1>
+        <p>Track shared expenses, confirm payments, and build reputation with friends and family.</p>
+        <div class="buttons">
+            <a href="https://apps.apple.com/app/trust-orbit" class="button primary">Download on App Store</a>
+            <a href="#features" class="button secondary">Learn More</a>
         </div>
+    </section>
 
-        <div class="documents">
-            <div class="doc-card">
-                <h2 id="terms-title">Terms of Service</h2>
-                <p id="terms-desc">Read our complete terms of service and how the app works.</p>
-                <div class="effective-date" id="terms-date">Effective: July 9, 2026</div>
-                <a href="#" id="terms-link" onclick="openDoc('terms'); return false;">Read Full Document →</a>
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <h2>How Trust Orbit Works</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>📝 Record Charges</h3>
+                <p>Create charges when someone owes you money. Track who owes what with complete transparency and clarity.</p>
             </div>
-
-            <div class="doc-card">
-                <h2 id="privacy-title">Privacy Policy</h2>
-                <p id="privacy-desc">Learn about how we collect, use, and protect your data.</p>
-                <div class="effective-date" id="privacy-date">Effective: July 9, 2026</div>
-                <a href="#" id="privacy-link" onclick="openDoc('privacy'); return false;">Read Full Document →</a>
+            <div class="feature-card">
+                <h3>💰 Confirm Payments</h3>
+                <p>Mark payments as paid and let the other person confirm receipt. Both sides must agree before it counts.</p>
+            </div>
+            <div class="feature-card">
+                <h3>⭐ Build Your Score</h3>
+                <p>Your trust score grows with confirmed payments. Show your friends you're reliable and trustworthy.</p>
+            </div>
+            <div class="feature-card">
+                <h3>👥 Social Network</h3>
+                <p>Connect with friends and family. See who you've shared expenses with and track group transactions.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📊 Payment Methods</h3>
+                <p>Store your payment details (SINPE, bank account) so others know exactly how to pay you back.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🔐 Private & Secure</h3>
+                <p>Your data is encrypted and private. We don't touch any money—payments happen between you and your friends.</p>
             </div>
         </div>
+    </section>
 
-        <footer>
-            <p>Trust Orbit — Kenneth Steven Zamora Cabezas, Costa Rica</p>
-            <p>Contact: <a href="mailto:kemridecr@icloud.com" style="color: #0066cc; text-decoration: none;">kemridecr@icloud.com</a></p>
-        </footer>
+    <!-- Legal Section -->
+    <section class="legal-section" id="legal">
+        <h2>Legal Documents</h2>
+        <div class="legal-grid">
+            <div class="legal-card">
+                <h3>📋 Terms of Service</h3>
+                <p>Everything you need to know about using Trust Orbit and how the app works.</p>
+                <a href="/terms-en.html">Read Terms (English)</a>
+                <br><br>
+                <a href="/terms-es.html" style="background: linear-gradient(135deg, #ff6b35, #ff8c42);">Leer Términos (Español)</a>
+            </div>
+            <div class="legal-card">
+                <h3>🔒 Privacy Policy</h3>
+                <p>How we collect, use, and protect your personal information and data.</p>
+                <a href="/privacy-en.html">Read Privacy (English)</a>
+                <br><br>
+                <a href="/privacy-es.html" style="background: linear-gradient(135deg, #ff6b35, #ff8c42);">Leer Privacidad (Español)</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>Trust Orbit</strong> — Social Payment Network</p>
+        <p>Kenneth Steven Zamora Cabezas, Costa Rica</p>
+        <p>Questions? <a href="mailto:kemridecr@icloud.com">Contact us at kemridecr@icloud.com</a></p>
+        <p style="margin-top: 20px; font-size: 0.8rem; opacity: 0.7;">© 2026 Trust Orbit. All rights reserved.</p>
+    </footer>
+
+    <!-- Language Selector -->
+    <div class="lang-selector">
+        <button class="active" onclick="alert('Currently in English')">EN</button>
+        <button onclick="alert('Coming soon: Spanish version')">ES</button>
     </div>
-
-    <script>
-        let currentLang = 'en';
-
-        const translations = {
-            en: {
-                'terms-title': 'Terms of Service',
-                'terms-desc': 'Read our complete terms of service and how the app works.',
-                'privacy-title': 'Privacy Policy',
-                'privacy-desc': 'Learn about how we collect, use, and protect your data.',
-            },
-            es: {
-                'terms-title': 'Términos de Servicio',
-                'terms-desc': 'Lee nuestros términos de servicio completos y cómo funciona la app.',
-                'privacy-title': 'Política de Privacidad',
-                'privacy-desc': 'Aprende cómo recopilamos, utilizamos y protegemos tus datos.',
-            }
-        };
-
-        function switchLang(lang) {
-            currentLang = lang;
-            document.querySelectorAll('.lang-selector button').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-
-            Object.entries(translations[lang]).forEach(([id, text]) => {
-                const el = document.getElementById(id);
-                if (el) el.textContent = text;
-            });
-        }
-
-        function openDoc(type) {
-            const filename = `${type}-${currentLang}.html`;
-            window.location.href = filename;
-        }
-    </script>
 </body>
 </html>
