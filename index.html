@@ -126,6 +126,11 @@
             }
         }
 
+        #features,
+        #legal {
+            scroll-margin-top: 100px;
+        }
+
         /* Hero Section */
         .hero {
             max-width: 1200px;
@@ -342,26 +347,21 @@
 
         /* Language Selector */
         .lang-selector {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            z-index: 30;
             display: flex;
-            gap: 8px;
-            background: white;
-            padding: 8px;
-            border-radius: 10px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            gap: 6px;
+            background: #f1f5f9;
+            padding: 4px;
+            border-radius: 8px;
         }
 
         .lang-selector button {
-            padding: 8px 16px;
+            padding: 6px 12px;
             border: none;
-            border-radius: 6px;
+            border-radius: 5px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .lang-selector button.active {
@@ -396,11 +396,41 @@
 
         @media (max-width: 768px) {
             nav {
-                height: 60px;
+                height: auto;
+                min-height: 64px;
+                padding: 10px 16px;
+                gap: 10px;
             }
 
             nav .nav-links {
                 display: none;
+            }
+
+            .logo-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
+            }
+
+            .logo-text {
+                font-size: 15px;
+                white-space: nowrap;
+            }
+
+            .logo-text .subtitle,
+            .logo-text::after {
+                display: none;
+            }
+
+            nav .cta-button {
+                padding: 8px 14px;
+                font-size: 0.85rem;
+                white-space: nowrap;
+            }
+
+            .lang-selector button {
+                padding: 5px 9px;
+                font-size: 0.75rem;
             }
 
             .hero {
@@ -415,11 +445,6 @@
                 padding: 40px 20px;
                 margin-left: 0;
                 margin-right: 0;
-            }
-
-            .lang-selector {
-                bottom: 16px;
-                right: 16px;
             }
         }
     </style>
@@ -437,7 +462,13 @@
                 <li><a href="#legal">Legal</a></li>
                 <li><a href="mailto:kemridecr@icloud.com">Support</a></li>
             </ul>
-            <a href="#legal" class="cta-button">Get Started</a>
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <div class="lang-selector">
+                    <button class="active" onclick="alert('Currently in English')">EN</button>
+                    <button onclick="alert('Coming soon: Spanish version')">ES</button>
+                </div>
+                <a href="#legal" class="cta-button">Get Started</a>
+            </div>
         </nav>
     </header>
 
@@ -510,11 +541,5 @@
         <p>Questions? <a href="mailto:kemridecr@icloud.com">Contact us at kemridecr@icloud.com</a></p>
         <p style="margin-top: 20px; font-size: 0.8rem; opacity: 0.7;">© 2026 Trust Orbit. All rights reserved.</p>
     </footer>
-
-    <!-- Language Selector -->
-    <div class="lang-selector">
-        <button class="active" onclick="alert('Currently in English')">EN</button>
-        <button onclick="alert('Coming soon: Spanish version')">ES</button>
-    </div>
 </body>
 </html>
