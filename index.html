@@ -280,6 +280,8 @@
             text-decoration: none;
             transition: all 0.25s;
             border: 1px solid var(--border);
+            cursor: pointer;
+            font-family: inherit;
         }
 
         .store-button.ios {
@@ -295,8 +297,13 @@
 
         .store-button.android {
             background: var(--surface-soft);
-            color: var(--text-secondary);
-            cursor: default;
+            color: var(--text-primary);
+        }
+
+        .store-button.android:hover {
+            transform: translateY(-2px);
+            border-color: var(--cyan);
+            box-shadow: 0 10px 24px rgba(34, 211, 238, 0.2);
         }
 
         .store-button svg {
@@ -737,6 +744,130 @@
                 align-items: flex-start;
             }
         }
+
+        /* Beta signup modal */
+        .beta-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: rgba(2, 6, 23, 0.75);
+            backdrop-filter: blur(6px);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .beta-modal-overlay.open {
+            display: flex;
+        }
+
+        .beta-modal {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 38px 30px 30px;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .beta-modal-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: none;
+            background: var(--surface-soft);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .beta-modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .beta-modal-icon {
+            font-size: 34px;
+            margin-bottom: 14px;
+        }
+
+        .beta-modal h3 {
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .beta-modal p {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            margin-bottom: 22px;
+            line-height: 1.6;
+        }
+
+        #beta-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        #beta-email {
+            padding: 12px 14px;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            background: var(--surface-soft);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: inherit;
+            outline: none;
+        }
+
+        #beta-email:focus {
+            border-color: var(--primary);
+        }
+
+        #beta-submit {
+            padding: 12px 14px;
+            border-radius: 9px;
+            border: none;
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            color: white;
+            font-weight: 700;
+            font-size: 0.95rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        #beta-submit:hover {
+            transform: translateY(-1px);
+        }
+
+        #beta-submit:disabled {
+            opacity: 0.6;
+            cursor: default;
+            transform: none;
+        }
+
+        .beta-status {
+            margin: 14px 0 0 !important;
+            font-size: 0.85rem !important;
+            min-height: 18px;
+        }
+
+        .beta-status.success {
+            color: var(--success);
+        }
+
+        .beta-status.error {
+            color: #f87171;
+        }
     </style>
 </head>
 <body>
@@ -767,21 +898,36 @@
 
     <!-- Hero -->
     <section class="hero" id="download">
-        <div class="eyebrow"><span class="dot"></span> <span data-i18n="hero.eyebrow">Live on iOS · Android coming soon</span></div>
+        <div class="eyebrow"><span class="dot"></span> <span data-i18n="hero.eyebrow">In private beta · join the waitlist</span></div>
         <h1 data-i18n="hero.title">Build <span class="accent">Trust</span> Through Payments</h1>
         <p class="lead" data-i18n="hero.lead">Track shared expenses, confirm payments, and build a reputation with friends and family — without any money ever passing through the app.</p>
         <div class="buttons">
-            <a href="#" class="store-button ios" id="app-store-link">
+            <button type="button" class="store-button ios" data-open-beta="ios">
                 <svg viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
-                <span class="label"><small data-i18n="hero.download_on">Download on the</small><strong>App Store</strong></span>
-            </a>
-            <div class="store-button android">
+                <span class="label"><small data-i18n="hero.join_beta">Join the beta on</small><strong>App Store</strong></span>
+            </button>
+            <button type="button" class="store-button android" data-open-beta="android">
                 <svg viewBox="0 0 512 512" fill="currentColor"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
-                <span class="label"><small data-i18n="hero.coming_to">Coming soon to</small><strong>Google Play</strong></span>
-            </div>
+                <span class="label"><small data-i18n="hero.notify_for">Notify me for</small><strong>Google Play</strong></span>
+            </button>
         </div>
-        <p class="platform-note" data-i18n="hero.note">iPhone required for iOS · Android release in development</p>
+        <p class="platform-note" data-i18n="hero.note">Sign up to get notified the moment Trust Orbit is ready for you</p>
     </section>
+
+    <!-- Beta signup modal -->
+    <div class="beta-modal-overlay" id="beta-modal-overlay">
+        <div class="beta-modal">
+            <button type="button" class="beta-modal-close" id="beta-modal-close" aria-label="Close">✕</button>
+            <div class="beta-modal-icon">🚀</div>
+            <h3 data-i18n="beta.title">Join the Beta</h3>
+            <p data-i18n="beta.body">Leave your email and we'll notify you the moment Trust Orbit is ready for your platform.</p>
+            <form id="beta-form">
+                <input type="email" id="beta-email" placeholder="you@email.com" required>
+                <button type="submit" id="beta-submit" data-i18n="beta.submit">Notify Me</button>
+            </form>
+            <p class="beta-status" id="beta-status"></p>
+        </div>
+    </div>
 
     <!-- How it works -->
     <section class="section" id="how">
@@ -909,7 +1055,7 @@
                     <span data-i18n="faqq2">When is Trust Orbit coming to Android?</span>
                     <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
                 </button>
-                <div class="faq-answer"><p data-i18n="faqa2">Trust Orbit is live on iOS today. The Android version is actively in development — check back soon or follow our updates.</p></div>
+                <div class="faq-answer"><p data-i18n="faqa2">Trust Orbit is currently in private beta on iOS, with Android in active development. Join the waitlist above and we'll email you the moment either is ready.</p></div>
             </div>
             <div class="faq-item">
                 <button class="faq-question">
@@ -986,16 +1132,17 @@
     </footer>
 
     <script>
-        const APP_STORE_URL = null; // set once the app is approved and the real App Store link is known
 
         const translations = {
             en: {
                 'nav.features': 'Features', 'nav.security': 'Security', 'nav.faq': 'FAQ', 'nav.legal': 'Legal', 'nav.cta': 'Get the App',
-                'hero.eyebrow': 'Live on iOS · Android coming soon',
+                'hero.eyebrow': 'In private beta · join the waitlist',
                 'hero.title': 'Build <span class="accent">Trust</span> Through Payments',
                 'hero.lead': 'Track shared expenses, confirm payments, and build a reputation with friends and family — without any money ever passing through the app.',
-                'hero.download_on': 'Download on the', 'hero.coming_to': 'Coming soon to',
-                'hero.note': 'iPhone required for iOS · Android release in development',
+                'hero.join_beta': 'Join the beta on', 'hero.notify_for': 'Notify me for',
+                'hero.note': "Sign up to get notified the moment Trust Orbit is ready for you",
+                'beta.title': 'Join the Beta', 'beta.body': "Leave your email and we'll notify you the moment Trust Orbit is ready for your platform.",
+                'beta.submit': 'Notify Me', 'beta.success': "You're on the list! We'll email you when it's ready.", 'beta.error': 'Something went wrong. Please try again.',
                 'how.kicker': 'How it works', 'how.title': 'Three steps to squared accounts',
                 'how.step1_title': 'Record a charge', 'how.step1_body': 'Log who owes what, for what, and how much — split between friends, roommates, or a group.',
                 'how.step2_title': 'Pay outside the app', 'how.step2_body': 'Settle up however you already do — cash, bank transfer, SINPE. Trust Orbit never touches the money.',
@@ -1014,7 +1161,7 @@
                 'sec4.title': "We don't sell your data", 'sec4.body': 'No ad targeting, no data brokers. Ever.',
                 'faq.kicker': 'FAQ', 'faq.title': 'Common questions',
                 'faqq1': 'Is Trust Orbit a bank or payment processor?', 'faqa1': 'No. Trust Orbit is a social ledger and reputation app. No money ever moves through the app — you and your counterparty settle up entirely on your own, outside of Trust Orbit.',
-                'faqq2': 'When is Trust Orbit coming to Android?', 'faqa2': 'Trust Orbit is live on iOS today. The Android version is actively in development — check back soon or follow our updates.',
+                'faqq2': 'When is Trust Orbit coming to Android?', 'faqa2': "Trust Orbit is currently in private beta on iOS, with Android in active development. Join the waitlist above and we'll email you the moment either is ready.",
                 'faqq3': 'Is Trust Orbit free?', 'faqa3': 'Yes, Trust Orbit is free to download and use. An optional Pro tier with additional features may be offered in the future.',
                 'faqq4': 'What is a "trust score"?', 'faqa4': "A reputational signal (1.0–5.0) based on your history of mutually confirmed payments inside the app. It's not a credit score or a financial background check.",
                 'faqq5': 'Who can see my information?', 'faqa5': "By default, your trust score is visible only to friends you've accepted. Payment method details are shown only to the counterparty on an active charge — never publicly.",
@@ -1026,11 +1173,13 @@
             },
             es: {
                 'nav.features': 'Funciones', 'nav.security': 'Seguridad', 'nav.faq': 'Preguntas', 'nav.legal': 'Legal', 'nav.cta': 'Obtener la App',
-                'hero.eyebrow': 'Disponible en iOS · Android próximamente',
+                'hero.eyebrow': 'En beta privada · únete a la lista de espera',
                 'hero.title': 'Construye <span class="accent">Confianza</span> a Través de Pagos',
                 'hero.lead': 'Registra gastos compartidos, confirma pagos y construye una reputación con amigos y familia — sin que ningún dinero pase jamás por la app.',
-                'hero.download_on': 'Descárgala en', 'hero.coming_to': 'Próximamente en',
-                'hero.note': 'Requiere iPhone para iOS · Versión de Android en desarrollo',
+                'hero.join_beta': 'Únete a la beta en', 'hero.notify_for': 'Notifícame para',
+                'hero.note': 'Regístrate para que te avisemos en cuanto Trust Orbit esté listo para ti',
+                'beta.title': 'Únete a la Beta', 'beta.body': 'Déjanos tu correo y te avisaremos en cuanto Trust Orbit esté listo para tu plataforma.',
+                'beta.submit': 'Notificarme', 'beta.success': '¡Ya estás en la lista! Te escribiremos cuando esté listo.', 'beta.error': 'Algo salió mal. Inténtalo de nuevo.',
                 'how.kicker': 'Cómo funciona', 'how.title': 'Tres pasos para cuadrar cuentas',
                 'how.step1_title': 'Registra un cargo', 'how.step1_body': 'Anota quién debe qué, por qué y cuánto — divide entre amigos, compañeros de casa o un grupo.',
                 'how.step2_title': 'Paga fuera de la app', 'how.step2_body': 'Salda la cuenta como ya lo haces — efectivo, transferencia bancaria, SINPE. Trust Orbit nunca toca el dinero.',
@@ -1049,7 +1198,7 @@
                 'sec4.title': 'No vendemos tus datos', 'sec4.body': 'Sin segmentación publicitaria, sin corredores de datos. Nunca.',
                 'faq.kicker': 'Preguntas', 'faq.title': 'Preguntas frecuentes',
                 'faqq1': '¿Trust Orbit es un banco o procesador de pagos?', 'faqa1': 'No. Trust Orbit es una aplicación de registro social y reputación. Ningún dinero pasa por la app — tú y tu contraparte se ponen de acuerdo por su cuenta, fuera de Trust Orbit.',
-                'faqq2': '¿Cuándo llega Trust Orbit a Android?', 'faqa2': 'Trust Orbit ya está disponible en iOS. La versión de Android está activamente en desarrollo — vuelve pronto o síguenos para actualizaciones.',
+                'faqq2': '¿Cuándo llega Trust Orbit a Android?', 'faqa2': 'Trust Orbit está actualmente en beta privada en iOS, con Android en desarrollo activo. Únete a la lista de espera arriba y te avisaremos por correo en cuanto cualquiera esté lista.',
                 'faqq3': '¿Trust Orbit es gratis?', 'faqa3': 'Sí, Trust Orbit es gratis para descargar y usar. En el futuro podríamos ofrecer un nivel Pro opcional con funciones adicionales.',
                 'faqq4': '¿Qué es un "puntaje de confianza"?', 'faqa4': 'Una señal reputacional (1.0–5.0) basada en tu historial de pagos confirmados mutuamente dentro de la app. No es un puntaje crediticio ni una verificación de antecedentes financieros.',
                 'faqq5': '¿Quién puede ver mi información?', 'faqa5': 'Por defecto, tu puntaje de confianza es visible solo para los amigos que has aceptado. Los detalles del método de pago se muestran solo a la contraparte de un cargo activo — nunca públicamente.',
@@ -1090,15 +1239,81 @@
             });
         });
 
-        // App Store link: disabled state until we have the real URL
-        const appStoreLink = document.getElementById('app-store-link');
-        if (!APP_STORE_URL) {
-            appStoreLink.style.opacity = '0.6';
-            appStoreLink.style.cursor = 'default';
-            appStoreLink.addEventListener('click', (e) => e.preventDefault());
-        } else {
-            appStoreLink.href = APP_STORE_URL;
+        // Beta signup modal
+        const SUPABASE_URL = 'https://moxqbmukahqmturvlzkz.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1veHFibXVrYWhxbXR1cnZsemt6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMjI3MzgsImV4cCI6MjA5ODU5ODczOH0.6QztdS8tPf3c7PJ6Zg1xdw6kCkF8UPAJQomARfeJ6SE';
+
+        const betaOverlay = document.getElementById('beta-modal-overlay');
+        const betaForm = document.getElementById('beta-form');
+        const betaEmail = document.getElementById('beta-email');
+        const betaSubmit = document.getElementById('beta-submit');
+        const betaStatus = document.getElementById('beta-status');
+        let betaPlatform = 'unspecified';
+
+        function openBetaModal(platform) {
+            betaPlatform = platform || 'unspecified';
+            betaStatus.textContent = '';
+            betaStatus.className = 'beta-status';
+            betaSubmit.disabled = false;
+            betaOverlay.classList.add('open');
+            setTimeout(() => betaEmail.focus(), 50);
         }
+
+        function closeBetaModal() {
+            betaOverlay.classList.remove('open');
+        }
+
+        document.querySelectorAll('[data-open-beta]').forEach(btn => {
+            btn.addEventListener('click', () => openBetaModal(btn.dataset.openBeta));
+        });
+
+        document.getElementById('beta-modal-close').addEventListener('click', closeBetaModal);
+        betaOverlay.addEventListener('click', (e) => {
+            if (e.target === betaOverlay) closeBetaModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeBetaModal();
+        });
+
+        betaForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = betaEmail.value.trim();
+            if (!email) return;
+
+            betaSubmit.disabled = true;
+            const lang = document.documentElement.lang === 'es' ? 'es' : 'en';
+            const submittingText = lang === 'es' ? 'Enviando…' : 'Submitting…';
+            betaSubmit.textContent = submittingText;
+
+            try {
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/beta_signups`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal',
+                    },
+                    body: JSON.stringify({ email, platform: betaPlatform }),
+                });
+
+                // 201 = inserted, 409 = duplicate email (already on the list) — both count as success
+                if (res.ok || res.status === 409) {
+                    betaStatus.textContent = translations[lang]['beta.success'];
+                    betaStatus.className = 'beta-status success';
+                    betaForm.reset();
+                    setTimeout(closeBetaModal, 1800);
+                } else {
+                    throw new Error('Request failed');
+                }
+            } catch (err) {
+                betaStatus.textContent = translations[lang]['beta.error'];
+                betaStatus.className = 'beta-status error';
+                betaSubmit.disabled = false;
+            } finally {
+                betaSubmit.textContent = translations[lang]['beta.submit'];
+            }
+        });
     </script>
 </body>
 </html>
