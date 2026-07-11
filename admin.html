@@ -257,6 +257,16 @@
         }
 
         .status-chips .chip b { color: var(--text-primary); }
+
+        td code {
+            font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+            font-size: 0.82rem;
+            background: var(--surface-soft);
+            border: 1px solid var(--border-soft);
+            border-radius: 6px;
+            padding: 2px 8px;
+            color: var(--cyan);
+        }
     </style>
 </head>
 <body>
@@ -292,6 +302,7 @@
                 <div class="stat green"><div class="k">Volumen confirmado</div><div class="v" id="s-volume">–</div><div class="sub" id="s-volume-extra"></div></div>
                 <div class="stat"><div class="k">Dispositivos push</div><div class="v" id="s-devices">–</div></div>
                 <div class="stat accent"><div class="k">Beta waitlist</div><div class="v" id="s-beta">–</div></div>
+                <div class="stat cyan"><div class="k">Códigos de referido</div><div class="v" id="s-referrals">–</div><div class="sub" id="s-referrals-sub"></div></div>
             </div>
 
             <h2>Cobros por estado</h2>
@@ -309,7 +320,7 @@
             <h2>Usuarios recientes</h2>
             <div class="panel">
                 <table id="users-table">
-                    <thead><tr><th>Usuario</th><th>Plan</th><th>Se unió</th></tr></thead>
+                    <thead><tr><th>Usuario</th><th>Plan</th><th>País</th><th>Código referido</th><th>Referidos</th><th>Cobros</th><th>Se unió</th></tr></thead>
                     <tbody></tbody>
                 </table>
             </div>
@@ -361,6 +372,11 @@
             document.getElementById('s-devices').textContent = data.devices.push_tokens;
             document.getElementById('s-beta').textContent = data.beta_signups.length;
 
+            const ref = data.referrals || { total_issued: 0, linked: 0, converted: 0 };
+            document.getElementById('s-referrals').textContent = ref.total_issued;
+            document.getElementById('s-referrals-sub').textContent =
+                ref.linked + ' vinculados · ' + ref.converted + ' convertidos';
+
             const vols = Object.entries(data.charges.confirmed_volume);
             document.getElementById('s-volume').textContent =
                 vols.length ? fmtMoney(vols[0][1]) + ' ' + vols[0][0] : '0';
@@ -398,11 +414,27 @@
             usersBody.innerHTML = '';
             for (const u of data.users.recent) {
                 const tr = document.createElement('tr');
+
                 const nameTd = document.createElement('td');
                 nameTd.textContent = '@' + u.username;
                 tr.appendChild(nameTd);
+
                 tr.insertAdjacentHTML('beforeend',
-                    '<td><span class="pill ' + (u.tier === 'pro' ? 'pro' : 'free') + '">' + u.tier + '</span></td>' +
+                    '<td><span class="pill ' + (u.tier === 'pro' ? 'pro' : 'free') + '">' + u.tier + '</span></td>');
+
+                const countryTd = document.createElement('td');
+                countryTd.textContent = u.country || '—';
+                tr.appendChild(countryTd);
+
+                const codeTd = document.createElement('td');
+                codeTd.innerHTML = u.referral_code
+                    ? '<code>' + u.referral_code + '</code>'
+                    : '<span style="color:var(--text-muted)">—</span>';
+                tr.appendChild(codeTd);
+
+                tr.insertAdjacentHTML('beforeend',
+                    '<td>' + u.referrals_made + '</td>' +
+                    '<td>' + u.charges_created + '</td>' +
                     '<td>' + fmtDate(u.created_at) + '</td>');
                 usersBody.appendChild(tr);
             }
