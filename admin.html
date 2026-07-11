@@ -385,6 +385,109 @@
 
         .ops-note .bad { color: var(--red); font-weight: 700; }
         .ops-note .ok { color: var(--green); font-weight: 700; }
+
+        #users-table tbody tr { cursor: pointer; }
+        #users-table tbody tr:hover { background: rgba(139, 92, 246, 0.06); }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: rgba(2, 6, 23, 0.72);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 40px 16px;
+            overflow-y: auto;
+        }
+
+        .modal {
+            position: relative;
+            width: 100%;
+            max-width: 560px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 30px 28px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            background: var(--surface-soft);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .modal-close:hover { color: var(--text-primary); }
+
+        .u-name {
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 800;
+        }
+
+        .u-sub { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 18px; }
+
+        .u-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .u-metric {
+            background: var(--surface-soft);
+            border: 1px solid var(--border-soft);
+            border-radius: 10px;
+            padding: 12px;
+        }
+
+        .u-metric .k { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); }
+        .u-metric .v { font-size: 1.2rem; font-weight: 800; font-family: 'Hanken Grotesk', sans-serif; margin-top: 2px; }
+
+        .u-section-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            font-weight: 700;
+            margin: 18px 0 8px;
+        }
+
+        .u-charge-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-soft);
+            font-size: 0.88rem;
+        }
+
+        .u-charge-row:last-child { border-bottom: none; }
+        .u-charge-row .amount { color: var(--text-secondary); white-space: nowrap; }
+
+        .u-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border-soft);
+        }
+
+        .u-actions .btn { padding: 9px 14px; font-size: 0.85rem; }
+        .u-action-msg { font-size: 0.85rem; margin-top: 10px; min-height: 18px; }
+        .u-action-msg.ok { color: var(--green); }
+        .u-action-msg.bad { color: var(--red); }
     </style>
 </head>
 <body>
@@ -480,6 +583,14 @@
                 <div class="empty hidden" id="users-empty">Ningún usuario coincide con la búsqueda.</div>
             </div>
         </div>
+
+        <!-- User detail modal -->
+        <div id="user-modal" class="modal-overlay hidden">
+            <div class="modal">
+                <button type="button" class="modal-close" id="user-modal-close" aria-label="Cerrar">✕</button>
+                <div id="user-modal-body"></div>
+            </div>
+        </div>
     </div>
 
     <script type="module">
@@ -520,6 +631,7 @@
 
             for (const u of rows) {
                 const tr = document.createElement('tr');
+                if (u.id) tr.addEventListener('click', () => openUserModal(u.id));
 
                 const nameTd = document.createElement('td');
                 nameTd.textContent = '@' + u.username;
@@ -620,6 +732,118 @@
             } else {
                 note.textContent = '';
             }
+        }
+
+        // ---- User detail modal + support actions ----
+        const userModal = document.getElementById('user-modal');
+        let currentUserId = null;
+
+        function closeUserModal() {
+            userModal.classList.add('hidden');
+            currentUserId = null;
+        }
+        document.getElementById('user-modal-close').addEventListener('click', closeUserModal);
+        userModal.addEventListener('click', (e) => { if (e.target === userModal) closeUserModal(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeUserModal(); });
+
+        function esc(s) {
+            return String(s == null ? '' : s).replace(/[&<>"]/g, (c) =>
+                ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+        }
+
+        async function openUserModal(userId) {
+            currentUserId = userId;
+            const bodyEl = document.getElementById('user-modal-body');
+            bodyEl.innerHTML = '<p style="color:var(--text-muted)">Cargando…</p>';
+            userModal.classList.remove('hidden');
+
+            const { data, error } = await supabase.rpc('fn_admin_user_detail', { p_user_id: userId });
+            if (error || !data || !data.profile) {
+                bodyEl.innerHTML = '<p class="u-action-msg bad">No se pudo cargar el usuario.</p>';
+                return;
+            }
+            renderUserModal(data);
+        }
+
+        function renderUserModal(d) {
+            const p = d.profile, r = d.referral, a = d.activity;
+            const proLine = p.is_founder
+                ? '<span class="pill pro">Founder · Pro de por vida</span>'
+                : p.tier === 'pro'
+                    ? '<span class="pill pro">Pro</span>' + (p.pro_until ? ' hasta ' + fmtDate(p.pro_until) : '')
+                    : '<span class="pill free">Free</span>';
+
+            const metric = (k, v) => '<div class="u-metric"><div class="k">' + k + '</div><div class="v">' + v + '</div></div>';
+
+            const charges = (d.recent_charges || []).map((c) =>
+                '<div class="u-charge-row"><span>' + esc(c.title) + ' <span style="color:var(--text-muted)">· ' + esc(c.status) + '</span></span>' +
+                '<span class="amount">' + fmtMoney(c.amount) + ' ' + esc(c.currency) + '</span></div>'
+            ).join('') || '<p style="color:var(--text-muted);font-size:0.88rem">Sin cobros creados.</p>';
+
+            document.getElementById('user-modal-body').innerHTML =
+                '<div class="u-name">@' + esc(p.username) + (p.deleted ? ' <span class="pill free">eliminado</span>' : '') + '</div>' +
+                '<div class="u-sub">' + esc(p.full_name || '—') + ' · ' + esc(p.country || '—') +
+                ' · desde ' + fmtDate(p.created_at) + '<br>' + proLine + '</div>' +
+
+                '<div class="u-grid">' +
+                    metric('Cobros creados', a.charges_created) +
+                    metric('Como participante', a.charges_as_participant) +
+                    metric('Pagos confirmados', a.confirmed_payments) +
+                    metric('Amigos', a.friends) +
+                    metric('Dispositivos', a.devices) +
+                    metric('Refirió a', r.referred_count) +
+                '</div>' +
+
+                '<div class="u-section-label">Referidos</div>' +
+                '<div style="font-size:0.88rem">Su código: ' +
+                    (r.code ? '<code>' + esc(r.code) + '</code>' : '<span style="color:var(--text-muted)">—</span>') +
+                    ' · Invitado por: ' + (r.referred_by ? '@' + esc(r.referred_by) : '<span style="color:var(--text-muted)">nadie</span>') +
+                '</div>' +
+
+                '<div class="u-section-label">Últimos cobros</div>' + charges +
+
+                '<div class="u-actions">' +
+                    '<button class="btn" data-act="grant15">+15 días Pro</button>' +
+                    '<button class="btn" data-act="grant30">+1 mes Pro</button>' +
+                    '<button class="btn ghost" data-act="revoke">Quitar Pro</button>' +
+                '</div>' +
+                '<div class="u-action-msg" id="u-action-msg"></div>';
+
+            document.querySelectorAll('#user-modal-body .u-actions .btn').forEach((btn) => {
+                btn.addEventListener('click', () => runUserAction(btn.dataset.act));
+            });
+        }
+
+        async function runUserAction(act) {
+            if (!currentUserId) return;
+            const msg = document.getElementById('u-action-msg');
+            const confirmText = act === 'revoke'
+                ? '¿Quitar Pro a este usuario?'
+                : act === 'grant15' ? '¿Dar 15 días de Pro?' : '¿Dar 1 mes de Pro?';
+            if (!window.confirm(confirmText)) return;
+
+            msg.className = 'u-action-msg';
+            msg.textContent = 'Aplicando…';
+
+            let res;
+            if (act === 'revoke') {
+                res = await supabase.rpc('fn_admin_revoke_pro', { p_user_id: currentUserId });
+            } else {
+                res = await supabase.rpc('fn_admin_grant_pro', {
+                    p_user_id: currentUserId,
+                    p_days: act === 'grant15' ? 15 : 30,
+                });
+            }
+
+            if (res.error) {
+                msg.className = 'u-action-msg bad';
+                msg.textContent = 'Error: ' + res.error.message;
+                return;
+            }
+            msg.className = 'u-action-msg ok';
+            msg.textContent = 'Listo. Recargando datos…';
+            await openUserModal(currentUserId);   // refresh modal
+            await loadDashboard();                 // refresh underlying stats/list
         }
 
         async function loadDashboard() {
