@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trust Orbit — Admin</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
+    <meta name="theme-color" content="#020617">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #020617;
+            --bg-alt: #131b2e;
+            --surface: #0f172a;
+            --surface-soft: #1e293b;
+            --primary: #8B5CF6;
+            --primary-light: #a78bfa;
+            --cyan: #22d3ee;
+            --green: #34d399;
+            --gold: #F59E0B;
+            --red: #f87171;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: rgba(255,255,255,0.10);
+            --border-soft: rgba(255,255,255,0.06);
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background:
+                radial-gradient(600px circle at 85% 0%, rgba(139,92,246,0.14), transparent 60%),
+                var(--bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .wrap {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 32px 20px 80px;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 36px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img { width: 34px; height: 34px; border-radius: 8px; }
+
+        .logo-text {
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .logo-text .accent { color: var(--primary-light); }
+
+        .logo-text .admin-tag {
+            font-size: 11px;
+            color: var(--bg);
+            background: var(--cyan);
+            border-radius: 5px;
+            padding: 1px 7px;
+            margin-left: 8px;
+            vertical-align: middle;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            color: white;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .btn:hover { transform: translateY(-1px); }
+        .btn:disabled { opacity: 0.55; cursor: default; transform: none; }
+
+        .btn.ghost {
+            background: var(--surface-soft);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-soft);
+        }
+
+        /* Login */
+        .login-card {
+            max-width: 380px;
+            margin: 10vh auto 0;
+            background: var(--surface);
+            border: 1px solid var(--border-soft);
+            border-radius: 16px;
+            padding: 34px 28px;
+        }
+
+        .login-card h1 {
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-size: 1.35rem;
+            margin-bottom: 6px;
+        }
+
+        .login-card p {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            margin-bottom: 22px;
+        }
+
+        .login-card form { display: flex; flex-direction: column; gap: 10px; }
+
+        .login-card input {
+            padding: 12px 14px;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            background: var(--surface-soft);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: inherit;
+            outline: none;
+        }
+
+        .login-card input:focus { border-color: var(--primary); }
+
+        .form-error {
+            color: var(--red);
+            font-size: 0.85rem;
+            min-height: 20px;
+            margin-top: 10px;
+        }
+
+        /* Dashboard */
+        .hidden { display: none !important; }
+
+        .meta-line {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-bottom: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 14px;
+            margin-bottom: 34px;
+        }
+
+        .stat {
+            background: var(--surface);
+            border: 1px solid var(--border-soft);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .stat .k {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .stat .v {
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-size: 1.7rem;
+            font-weight: 800;
+        }
+
+        .stat .sub { font-size: 0.78rem; color: var(--text-secondary); }
+
+        .stat.accent .v { color: var(--primary-light); }
+        .stat.green .v { color: var(--green); }
+        .stat.gold .v { color: var(--gold); }
+        .stat.cyan .v { color: var(--cyan); }
+
+        h2 {
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-size: 1.05rem;
+            margin: 30px 0 12px;
+        }
+
+        .panel {
+            background: var(--surface);
+            border: 1px solid var(--border-soft);
+            border-radius: 14px;
+            overflow-x: auto;
+        }
+
+        table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+
+        th, td {
+            text-align: left;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-soft);
+            white-space: nowrap;
+        }
+
+        th {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        .pill {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .pill.ios { background: rgba(139,92,246,0.15); color: var(--primary-light); }
+        .pill.android { background: rgba(52,211,153,0.15); color: var(--green); }
+        .pill.unspecified { background: var(--surface-soft); color: var(--text-secondary); }
+        .pill.pro { background: rgba(245,158,11,0.15); color: var(--gold); }
+        .pill.free { background: var(--surface-soft); color: var(--text-secondary); }
+
+        .empty {
+            padding: 24px;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+        }
+
+        .status-chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px; }
+
+        .status-chips .chip {
+            background: var(--surface-soft);
+            border: 1px solid var(--border-soft);
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+        }
+
+        .status-chips .chip b { color: var(--text-primary); }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <div class="logo">
+                <img src="/assets/logo.png" alt="">
+                <span class="logo-text">Trust <span class="accent">Orbit</span><span class="admin-tag">ADMIN</span></span>
+            </div>
+            <button id="signout" class="btn ghost hidden">Cerrar sesión</button>
+        </header>
+
+        <!-- Login -->
+        <div id="login-view" class="login-card">
+            <h1>Panel de administración</h1>
+            <p>Inicia sesión con tu cuenta de Trust Orbit.</p>
+            <form id="login-form">
+                <input type="email" id="email" placeholder="Correo" autocomplete="username" required>
+                <input type="password" id="password" placeholder="Contraseña" autocomplete="current-password" required>
+                <button type="submit" class="btn" id="login-btn">Entrar</button>
+            </form>
+            <div class="form-error" id="login-error"></div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dash-view" class="hidden">
+            <div class="meta-line" id="meta-line"></div>
+
+            <div class="grid">
+                <div class="stat accent"><div class="k">Usuarios</div><div class="v" id="s-users">–</div><div class="sub" id="s-users-new"></div></div>
+                <div class="stat gold"><div class="k">Pro</div><div class="v" id="s-pro">–</div><div class="sub" id="s-founders"></div></div>
+                <div class="stat cyan"><div class="k">Cobros</div><div class="v" id="s-charges">–</div><div class="sub" id="s-charges-new"></div></div>
+                <div class="stat green"><div class="k">Volumen confirmado</div><div class="v" id="s-volume">–</div><div class="sub" id="s-volume-extra"></div></div>
+                <div class="stat"><div class="k">Dispositivos push</div><div class="v" id="s-devices">–</div></div>
+                <div class="stat accent"><div class="k">Beta waitlist</div><div class="v" id="s-beta">–</div></div>
+            </div>
+
+            <h2>Cobros por estado</h2>
+            <div class="panel"><div class="status-chips" id="charge-status"></div></div>
+
+            <h2>Lista de espera (beta)</h2>
+            <div class="panel">
+                <table id="beta-table">
+                    <thead><tr><th>Correo</th><th>Plataforma</th><th>Fecha</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+                <div class="empty hidden" id="beta-empty">Todavía no hay registros.</div>
+            </div>
+
+            <h2>Usuarios recientes</h2>
+            <div class="panel">
+                <table id="users-table">
+                    <thead><tr><th>Usuario</th><th>Plan</th><th>Se unió</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+        const supabase = createClient(
+            'https://moxqbmukahqmturvlzkz.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1veHFibXVrYWhxbXR1cnZsemt6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMjI3MzgsImV4cCI6MjA5ODU5ODczOH0.6QztdS8tPf3c7PJ6Zg1xdw6kCkF8UPAJQomARfeJ6SE',
+        );
+
+        const loginView = document.getElementById('login-view');
+        const dashView = document.getElementById('dash-view');
+        const signoutBtn = document.getElementById('signout');
+        const loginError = document.getElementById('login-error');
+        const loginBtn = document.getElementById('login-btn');
+
+        function fmtDate(iso) {
+            return new Date(iso).toLocaleDateString('es-CR', { day: 'numeric', month: 'short', year: 'numeric' });
+        }
+
+        function fmtMoney(n) {
+            return Number(n).toLocaleString('es-CR', { maximumFractionDigits: 0 });
+        }
+
+        async function loadDashboard() {
+            const { data, error } = await supabase.rpc('fn_admin_dashboard');
+            if (error) {
+                // Signed in but not an admin (or the RPC failed) — never show data.
+                await supabase.auth.signOut();
+                showLogin(error.message.includes('not authorized')
+                    ? 'Esta cuenta no tiene acceso de administrador.'
+                    : 'Error cargando datos: ' + error.message);
+                return;
+            }
+
+            document.getElementById('meta-line').textContent =
+                'Actualizado: ' + new Date(data.generated_at).toLocaleString('es-CR');
+
+            document.getElementById('s-users').textContent = data.users.total;
+            document.getElementById('s-users-new').textContent = '+' + data.users.new_7d + ' esta semana';
+            document.getElementById('s-pro').textContent = data.users.pro;
+            document.getElementById('s-founders').textContent = data.users.founders + ' founders';
+            document.getElementById('s-charges').textContent = data.charges.total;
+            document.getElementById('s-charges-new').textContent = '+' + data.charges.new_7d + ' esta semana';
+            document.getElementById('s-devices').textContent = data.devices.push_tokens;
+            document.getElementById('s-beta').textContent = data.beta_signups.length;
+
+            const vols = Object.entries(data.charges.confirmed_volume);
+            document.getElementById('s-volume').textContent =
+                vols.length ? fmtMoney(vols[0][1]) + ' ' + vols[0][0] : '0';
+            document.getElementById('s-volume-extra').textContent =
+                vols.slice(1).map(([c, n]) => fmtMoney(n) + ' ' + c).join(' · ');
+
+            const statusBox = document.getElementById('charge-status');
+            statusBox.innerHTML = '';
+            const statuses = Object.entries(data.charges.by_status).sort((a, b) => b[1] - a[1]);
+            if (statuses.length === 0) {
+                statusBox.innerHTML = '<span class="chip">Sin cobros todavía</span>';
+            }
+            for (const [status, n] of statuses) {
+                const chip = document.createElement('span');
+                chip.className = 'chip';
+                chip.innerHTML = status + ': <b>' + n + '</b>';
+                statusBox.appendChild(chip);
+            }
+
+            const betaBody = document.querySelector('#beta-table tbody');
+            betaBody.innerHTML = '';
+            document.getElementById('beta-empty').classList.toggle('hidden', data.beta_signups.length > 0);
+            for (const row of data.beta_signups) {
+                const tr = document.createElement('tr');
+                const emailTd = document.createElement('td');
+                emailTd.textContent = row.email;
+                tr.appendChild(emailTd);
+                tr.insertAdjacentHTML('beforeend',
+                    '<td><span class="pill ' + row.platform + '">' + row.platform + '</span></td>' +
+                    '<td>' + fmtDate(row.created_at) + '</td>');
+                betaBody.appendChild(tr);
+            }
+
+            const usersBody = document.querySelector('#users-table tbody');
+            usersBody.innerHTML = '';
+            for (const u of data.users.recent) {
+                const tr = document.createElement('tr');
+                const nameTd = document.createElement('td');
+                nameTd.textContent = '@' + u.username;
+                tr.appendChild(nameTd);
+                tr.insertAdjacentHTML('beforeend',
+                    '<td><span class="pill ' + (u.tier === 'pro' ? 'pro' : 'free') + '">' + u.tier + '</span></td>' +
+                    '<td>' + fmtDate(u.created_at) + '</td>');
+                usersBody.appendChild(tr);
+            }
+
+            loginView.classList.add('hidden');
+            dashView.classList.remove('hidden');
+            signoutBtn.classList.remove('hidden');
+        }
+
+        function showLogin(message) {
+            dashView.classList.add('hidden');
+            signoutBtn.classList.add('hidden');
+            loginView.classList.remove('hidden');
+            loginError.textContent = message || '';
+        }
+
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            loginBtn.disabled = true;
+            loginError.textContent = '';
+            const { error } = await supabase.auth.signInWithPassword({
+                email: document.getElementById('email').value.trim(),
+                password: document.getElementById('password').value,
+            });
+            loginBtn.disabled = false;
+            if (error) {
+                loginError.textContent = 'Credenciales inválidas.';
+                return;
+            }
+            await loadDashboard();
+        });
+
+        signoutBtn.addEventListener('click', async () => {
+            await supabase.auth.signOut();
+            showLogin();
+        });
+
+        // Restore an existing session on load.
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+            await loadDashboard();
+        } else {
+            showLogin();
+        }
+    </script>
+</body>
+</html>
