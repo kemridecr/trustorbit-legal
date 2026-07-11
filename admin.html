@@ -294,6 +294,75 @@
         }
 
         #users-search:focus { border-color: var(--primary); }
+
+        .chart-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 12px;
+        }
+
+        @media (max-width: 640px) { .chart-row { grid-template-columns: 1fr; } }
+
+        .chart-card {
+            background: var(--surface);
+            border: 1px solid var(--border-soft);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .chart-title {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+        }
+
+        .bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 90px;
+        }
+
+        .bars .bar {
+            flex: 1;
+            min-height: 2px;
+            border-radius: 3px 3px 0 0;
+            background: linear-gradient(180deg, var(--primary-light), var(--primary));
+            opacity: 0.85;
+            transition: opacity 0.15s;
+        }
+
+        .bars.cyan .bar {
+            background: linear-gradient(180deg, #67e8f9, var(--cyan));
+        }
+
+        .bars .bar:hover { opacity: 1; }
+
+        .status-dot {
+            display: inline-block;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .status-dot.ok { background: var(--green); box-shadow: 0 0 6px var(--green); }
+        .status-dot.bad { background: var(--red); box-shadow: 0 0 6px var(--red); }
+        .status-dot.idle { background: var(--text-muted); }
+
+        .ops-note {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .ops-note .bad { color: var(--red); font-weight: 700; }
+        .ops-note .ok { color: var(--green); font-weight: 700; }
     </style>
 </head>
 <body>
@@ -331,6 +400,31 @@
                 <div class="stat accent"><div class="k">Beta waitlist</div><div class="v" id="s-beta">–</div></div>
                 <div class="stat cyan"><div class="k">Códigos de referido</div><div class="v" id="s-referrals">–</div><div class="sub" id="s-referrals-sub"></div></div>
             </div>
+
+            <h2>Crecimiento (últimos 30 días)</h2>
+            <div class="grid">
+                <div class="stat cyan"><div class="k">Activos 7 días</div><div class="v" id="s-active7">–</div><div class="sub">con actividad de cobros/pagos</div></div>
+                <div class="stat cyan"><div class="k">Activos 30 días</div><div class="v" id="s-active30">–</div><div class="sub">con actividad de cobros/pagos</div></div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-card">
+                    <div class="chart-title">Registros por día</div>
+                    <div class="bars" id="chart-signups"></div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-title">Cobros por día</div>
+                    <div class="bars cyan" id="chart-charges"></div>
+                </div>
+            </div>
+
+            <h2>Estado de procesos automáticos</h2>
+            <div class="panel">
+                <table id="ops-table">
+                    <thead><tr><th>Proceso</th><th>Programación</th><th>Última corrida</th><th>Estado</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="ops-note" id="edge-http-note"></div>
 
             <h2>Cobros por estado</h2>
             <div class="panel"><div class="status-chips" id="charge-status"></div></div>
@@ -426,6 +520,59 @@
             renderUsers(e.target.value);
         });
 
+        function renderBars(containerId, series) {
+            const el = document.getElementById(containerId);
+            el.innerHTML = '';
+            const max = Math.max(1, ...series.map((p) => p.count));
+            for (const p of series) {
+                const bar = document.createElement('div');
+                bar.className = 'bar';
+                bar.style.height = Math.round((p.count / max) * 100) + '%';
+                bar.title = fmtDate(p.date) + ': ' + p.count;
+                el.appendChild(bar);
+            }
+        }
+
+        function fmtDateTime(iso) {
+            return iso ? new Date(iso).toLocaleString('es-CR') : '—';
+        }
+
+        function renderOps(ops) {
+            const body = document.querySelector('#ops-table tbody');
+            body.innerHTML = '';
+            for (const j of ops.jobs || []) {
+                const ok = j.last_status === 'succeeded';
+                const bad = j.last_status === 'failed';
+                const dot = ok ? 'ok' : bad ? 'bad' : 'idle';
+                const label = ok ? 'OK' : bad ? 'Falló' : (j.last_status || 'sin correr aún');
+                const tr = document.createElement('tr');
+                const nameTd = document.createElement('td');
+                nameTd.textContent = j.name;
+                tr.appendChild(nameTd);
+                const schedTd = document.createElement('td');
+                schedTd.innerHTML = '<code>' + j.schedule + '</code>';
+                tr.appendChild(schedTd);
+                const runTd = document.createElement('td');
+                runTd.textContent = fmtDateTime(j.last_run);
+                tr.appendChild(runTd);
+                const statusTd = document.createElement('td');
+                statusTd.innerHTML = '<span class="status-dot ' + dot + '"></span>' + label;
+                tr.appendChild(statusTd);
+                body.appendChild(tr);
+            }
+
+            const note = document.getElementById('edge-http-note');
+            const http = ops.edge_last_http;
+            if (http && http.status_code != null) {
+                const good = http.status_code >= 200 && http.status_code < 300;
+                note.innerHTML = 'Edge Function (recordatorios) — último HTTP: ' +
+                    '<span class="' + (good ? 'ok' : 'bad') + '">' + http.status_code + '</span> · ' +
+                    fmtDateTime(http.created);
+            } else {
+                note.textContent = '';
+            }
+        }
+
         async function loadDashboard() {
             const { data, error } = await supabase.rpc('fn_admin_dashboard');
             if (error) {
@@ -459,6 +606,16 @@
                 vols.length ? fmtMoney(vols[0][1]) + ' ' + vols[0][0] : '0';
             document.getElementById('s-volume-extra').textContent =
                 vols.slice(1).map(([c, n]) => fmtMoney(n) + ' ' + c).join(' · ');
+
+            // ---- Growth over time ----
+            const growth = data.growth || {};
+            document.getElementById('s-active7').textContent = growth.active_7d ?? '–';
+            document.getElementById('s-active30').textContent = growth.active_30d ?? '–';
+            renderBars('chart-signups', growth.signups_daily || []);
+            renderBars('chart-charges', growth.charges_daily || []);
+
+            // ---- Ops / cron health ----
+            renderOps(data.ops || { jobs: [], edge_last_http: null });
 
             const statusBox = document.getElementById('charge-status');
             statusBox.innerHTML = '';
