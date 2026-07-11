@@ -311,13 +311,27 @@
             padding: 18px;
         }
 
+        .chart-head {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
         .chart-title {
             font-size: 0.72rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--text-muted);
-            margin-bottom: 14px;
+        }
+
+        .chart-total {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            white-space: nowrap;
         }
 
         .bars {
@@ -325,6 +339,14 @@
             align-items: flex-end;
             gap: 3px;
             height: 90px;
+        }
+
+        .chart-axis {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
         }
 
         .bars .bar {
@@ -408,12 +430,20 @@
             </div>
             <div class="chart-row">
                 <div class="chart-card">
-                    <div class="chart-title">Registros por día</div>
+                    <div class="chart-head">
+                        <span class="chart-title">Registros por día</span>
+                        <span class="chart-total" id="total-signups"></span>
+                    </div>
                     <div class="bars" id="chart-signups"></div>
+                    <div class="chart-axis" id="axis-signups"></div>
                 </div>
                 <div class="chart-card">
-                    <div class="chart-title">Cobros por día</div>
+                    <div class="chart-head">
+                        <span class="chart-title">Cobros por día</span>
+                        <span class="chart-total" id="total-charges"></span>
+                    </div>
                     <div class="bars cyan" id="chart-charges"></div>
+                    <div class="chart-axis" id="axis-charges"></div>
                 </div>
             </div>
 
@@ -520,16 +550,35 @@
             renderUsers(e.target.value);
         });
 
-        function renderBars(containerId, series) {
-            const el = document.getElementById(containerId);
+        function fmtShort(iso) {
+            return new Date(iso).toLocaleDateString('es-CR', { day: 'numeric', month: 'short' });
+        }
+
+        function renderChart(kind, series) {
+            const el = document.getElementById('chart-' + kind);
             el.innerHTML = '';
-            const max = Math.max(1, ...series.map((p) => p.count));
+            const counts = series.map((p) => p.count);
+            const max = Math.max(1, ...counts);
+            const total = counts.reduce((a, b) => a + b, 0);
+
             for (const p of series) {
                 const bar = document.createElement('div');
                 bar.className = 'bar';
                 bar.style.height = Math.round((p.count / max) * 100) + '%';
                 bar.title = fmtDate(p.date) + ': ' + p.count;
                 el.appendChild(bar);
+            }
+
+            document.getElementById('total-' + kind).textContent =
+                total + ' en total · máx ' + max + '/día';
+
+            const axis = document.getElementById('axis-' + kind);
+            if (series.length) {
+                const mid = series[Math.floor(series.length / 2)];
+                axis.innerHTML =
+                    '<span>' + fmtShort(series[0].date) + '</span>' +
+                    '<span>' + fmtShort(mid.date) + '</span>' +
+                    '<span>' + fmtShort(series[series.length - 1].date) + '</span>';
             }
         }
 
@@ -611,8 +660,8 @@
             const growth = data.growth || {};
             document.getElementById('s-active7').textContent = growth.active_7d ?? '–';
             document.getElementById('s-active30').textContent = growth.active_30d ?? '–';
-            renderBars('chart-signups', growth.signups_daily || []);
-            renderBars('chart-charges', growth.charges_daily || []);
+            renderChart('signups', growth.signups_daily || []);
+            renderChart('charges', growth.charges_daily || []);
 
             // ---- Ops / cron health ----
             renderOps(data.ops || { jobs: [], edge_last_http: null });
