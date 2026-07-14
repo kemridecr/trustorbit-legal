@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trust Orbit — Build Trust Through Payments</title>
+    <meta name="description" content="Track shared expenses, confirm payments, and build a reputation with friends and family. No money ever passes through the app — Trust Orbit just keeps the ledger honest.">
+    <meta name="theme-color" content="#020617">
+    <link rel="canonical" href="https://trustsorbit.app/trust.html">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
+    <link rel="apple-touch-icon" href="/assets/logo.png">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://trustsorbit.app/">
+    <meta property="og:title" content="Trust Orbit — Build Trust Through Payments">
+    <meta property="og:description" content="Track shared expenses, confirm payments, and build a reputation with friends and family.">
+    <meta property="og:image" content="https://trustsorbit.app/assets/og-image.jpg">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="es_CR">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Trust Orbit — Build Trust Through Payments">
+    <meta name="twitter:description" content="Track shared expenses, confirm payments, and build a reputation with friends and family.">
+    <meta name="twitter:image" content="https://trustsorbit.app/assets/og-image.jpg">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #020617;
+            --bg-alt: #131b2e;
+            --surface: #0f172a;
+            --surface-soft: #1e293b;
+            --primary: #8B5CF6;
+            --primary-light: #a78bfa;
+            --cyan: #22d3ee;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: rgba(255, 255, 255, 0.10);
+            --border-soft: rgba(255, 255, 255, 0.06);
+            --success: #34d399;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        #features, #security, #faq, #legal, #download, #petorbit {
+            scroll-margin-top: 90px;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.65;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        /* Background ambience */
+        .bg-glow {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background:
+                radial-gradient(600px circle at 85% 8%, rgba(139, 92, 246, 0.18), transparent 60%),
+                radial-gradient(500px circle at 5% 60%, rgba(34, 211, 238, 0.10), transparent 60%),
+                var(--bg);
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: rgba(2, 6, 23, 0.75);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 76px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo img {
+            width: 36px;
+            height: 36px;
+            border-radius: 9px;
+            display: block;
+        }
+
+        .logo-text {
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-size: 19px;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+        }
+
+        .logo-text .accent {
+            color: var(--primary-light);
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        nav .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 14.5px;
+            transition: color 0.2s;
+        }
+
+        nav .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .lang-selector {
+            display: flex;
+            gap: 4px;
+            background: var(--surface-soft);
+            padding: 3px;
+            border-radius: 7px;
+            border: 1px solid var(--border-soft);
+        }
+
+        .lang-selector button {
+            padding: 5px 11px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            font-size: 0.78rem;
+            background: transparent;
+            color: var(--text-secondary);
+            font-family: inherit;
+        }
+
+        .lang-selector button.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            font-size: 14.5px;
+            cursor: pointer;
+            transition: transform 0.25s, box-shadow 0.25s;
+            text-decoration: none;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(139, 92, 246, 0.35);
+        }
+
+        @media (max-width: 860px) {
+            nav .nav-links {
+                display: none;
+            }
+        }
+
+        /* Hero */
+        .hero {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 110px 24px 90px;
+            text-align: center;
+        }
+
+        .hero .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(139, 92, 246, 0.12);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            color: var(--primary-light);
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 28px;
+        }
+
+        .hero .eyebrow .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--success);
+            box-shadow: 0 0 8px var(--success);
+        }
+
+        .hero h1 {
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-size: clamp(2.4rem, 6vw, 3.75rem);
+            font-weight: 900;
+            margin-bottom: 22px;
+            letter-spacing: -1.5px;
+            line-height: 1.08;
+            color: var(--text-primary);
+        }
+
+        .hero h1 .accent {
+            background: linear-gradient(135deg, var(--primary-light), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p.lead {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 580px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero .buttons {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .store-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 22px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.25s;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .store-button.ios {
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            color: white;
+            border-color: transparent;
+        }
+
+        .store-button.ios:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(139, 92, 246, 0.35);
+        }
+
+        .store-button.android {
+            background: var(--surface-soft);
+            color: var(--text-primary);
+        }
+
+        .store-button.android:hover {
+            transform: translateY(-2px);
+            border-color: var(--cyan);
+            box-shadow: 0 10px 24px rgba(34, 211, 238, 0.2);
+        }
+
+        .store-button svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .store-button .label small {
+            display: block;
+            font-size: 0.68rem;
+            font-weight: 500;
+            opacity: 0.85;
+        }
+
+        .store-button .label strong {
+            display: block;
+            font-size: 0.92rem;
+        }
+
+        .hero .platform-note {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Section shell */
+        .section {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 90px 24px;
+        }
+
+        .section-head {
+            text-align: center;
+            max-width: 640px;
+            margin: 0 auto 56px;
+        }
+
+        .section-head .kicker {
+            color: var(--primary-light);
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 10px;
+        }
+
+        .section-head h2 {
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-size: clamp(1.7rem, 4vw, 2.4rem);
+            font-weight: 800;
+            letter-spacing: -0.8px;
+            margin-bottom: 14px;
+        }
+
+        .section-head p {
+            color: var(--text-secondary);
+            font-size: 1.02rem;
+        }
+
+        /* Features grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            padding: 32px;
+            border-radius: 16px;
+            background: linear-gradient(180deg, var(--surface) 0%, rgba(15, 23, 42, 0.4) 100%);
+            border: 1px solid var(--border-soft);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(139, 92, 246, 0.4);
+        }
+
+        .feature-card .icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 18px;
+            background: rgba(139, 92, 246, 0.12);
+            border: 1px solid rgba(139, 92, 246, 0.25);
+        }
+
+        .feature-card h3 {
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* How it works - steps */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 32px;
+            counter-reset: step;
+        }
+
+        .step {
+            position: relative;
+            padding-left: 4px;
+        }
+
+        .step .num {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--cyan));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-family: 'Hanken Grotesk', sans-serif;
+            margin-bottom: 16px;
+            color: var(--bg);
+            font-size: 1rem;
+        }
+
+        .step h3 {
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .step p {
+            color: var(--text-secondary);
+            font-size: 0.93rem;
+        }
+
+        /* Security section */
+        .security-section {
+            background: linear-gradient(135deg, var(--surface) 0%, var(--bg-alt) 100%);
+            border-radius: 24px;
+            border: 1px solid var(--border-soft);
+            margin: 0 24px;
+            padding: 70px 24px;
+        }
+
+        .security-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .security-item {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .security-item .check {
+            flex-shrink: 0;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: rgba(52, 211, 153, 0.15);
+            border: 1px solid rgba(52, 211, 153, 0.4);
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 800;
+            margin-top: 2px;
+        }
+
+        .security-item h4 {
+            font-size: 0.98rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .security-item p {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+        }
+
+        /* FAQ */
+        .faq-list {
+            max-width: 760px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .faq-item {
+            border: 1px solid var(--border-soft);
+            border-radius: 12px;
+            background: var(--surface);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            text-align: left;
+            padding: 20px 22px;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.98rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .faq-question .chev {
+            flex-shrink: 0;
+            transition: transform 0.25s;
+            color: var(--text-muted);
+        }
+
+        .faq-item.open .faq-question .chev {
+            transform: rotate(180deg);
+            color: var(--primary-light);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 300px;
+        }
+
+        .faq-answer p {
+            padding: 0 22px 20px;
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        /* PetOrbit section */
+        .petorbit-card {
+            max-width: 780px;
+            margin: 0 auto;
+            display: flex;
+            gap: 28px;
+            align-items: flex-start;
+            padding: 36px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, var(--surface) 0%, var(--bg-alt) 100%);
+            border: 1px solid var(--border-soft);
+        }
+
+        .petorbit-icon {
+            flex-shrink: 0;
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            background: rgba(139, 92, 246, 0.12);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .petorbit-content h3 {
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .petorbit-content > p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .petorbit-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .petorbit-features li {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .petorbit-content .cta-button {
+            font-size: 0.88rem;
+        }
+
+        @media (max-width: 600px) {
+            .petorbit-card {
+                flex-direction: column;
+                padding: 28px 22px;
+            }
+        }
+
+        /* Legal section */
+        .legal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .legal-card {
+            background: var(--surface);
+            border: 1px solid var(--border-soft);
+            padding: 30px;
+            border-radius: 16px;
+        }
+
+        .legal-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .legal-card p {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .legal-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .legal-links a {
+            display: inline-block;
+            padding: 9px 16px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: transform 0.2s;
+            border: 1px solid var(--border);
+        }
+
+        .legal-links a:hover {
+            transform: translateY(-2px);
+        }
+
+        .legal-links a.en {
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            color: white;
+            border-color: transparent;
+        }
+
+        .legal-links a.es {
+            background: var(--surface-soft);
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-soft);
+            padding: 50px 24px 30px;
+        }
+
+        .footer-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        footer .logo-text {
+            font-size: 16px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 22px;
+            list-style: none;
+            flex-wrap: wrap;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            background: var(--surface-soft);
+            border: 1px solid var(--border-soft);
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+
+        .social-links a:hover {
+            color: white;
+            border-color: rgba(139, 92, 246, 0.5);
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(236, 72, 153, 0.25));
+        }
+
+        .footer-bottom {
+            padding-top: 24px;
+            border-top: 1px solid var(--border-soft);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero, .section {
+            animation: fadeInUp 0.7s ease-out;
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                height: auto;
+                min-height: 64px;
+                padding: 10px 16px;
+                gap: 8px;
+            }
+
+            .logo img {
+                width: 30px;
+                height: 30px;
+            }
+
+            .logo-text {
+                font-size: 15px;
+                white-space: nowrap;
+            }
+
+            .nav-right {
+                gap: 8px;
+            }
+
+            .lang-selector button {
+                padding: 5px 8px;
+                font-size: 0.72rem;
+            }
+
+            .cta-button {
+                padding: 8px 14px;
+                font-size: 0.8rem;
+                white-space: nowrap;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero {
+                padding: 70px 20px 60px;
+            }
+
+            .section {
+                padding: 60px 20px;
+            }
+
+            .security-section {
+                margin: 0 12px;
+                padding: 50px 20px;
+                border-radius: 18px;
+            }
+
+            .store-button {
+                padding: 11px 16px;
+            }
+
+            .footer-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* Beta signup modal */
+        .beta-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: rgba(2, 6, 23, 0.75);
+            backdrop-filter: blur(6px);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .beta-modal-overlay.open {
+            display: flex;
+        }
+
+        .beta-modal {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 38px 30px 30px;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .beta-modal-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: none;
+            background: var(--surface-soft);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .beta-modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .beta-modal-icon {
+            font-size: 34px;
+            margin-bottom: 14px;
+        }
+
+        .beta-modal h3 {
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .beta-modal p {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            margin-bottom: 22px;
+            line-height: 1.6;
+        }
+
+        #beta-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        #beta-email {
+            padding: 12px 14px;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            background: var(--surface-soft);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: inherit;
+            outline: none;
+        }
+
+        #beta-email:focus {
+            border-color: var(--primary);
+        }
+
+        #beta-submit {
+            padding: 12px 14px;
+            border-radius: 9px;
+            border: none;
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            color: white;
+            font-weight: 700;
+            font-size: 0.95rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        #beta-submit:hover {
+            transform: translateY(-1px);
+        }
+
+        #beta-submit:disabled {
+            opacity: 0.6;
+            cursor: default;
+            transform: none;
+        }
+
+        .beta-status {
+            margin: 14px 0 0 !important;
+            font-size: 0.85rem !important;
+            min-height: 18px;
+        }
+
+        .beta-status.success {
+            color: var(--success);
+        }
+
+        .beta-status.error {
+            color: #f87171;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-glow"></div>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="/" class="logo">
+                <img src="/assets/logo.png" alt="Trust Orbit">
+                <span class="logo-text">Trust <span class="accent">Orbit</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features" data-i18n="nav.features">Features</a></li>
+                <li><a href="#security" data-i18n="nav.security">Security</a></li>
+                <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
+                <li><a href="#petorbit" data-i18n="nav.petorbit">PetOrbit</a></li>
+                <li><a href="#legal" data-i18n="nav.legal">Legal</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="lang-selector">
+                    <button class="active" data-lang-btn="en">EN</button>
+                    <button data-lang-btn="es">ES</button>
+                </div>
+                <a href="#download" class="cta-button" data-i18n="nav.cta">Get the App</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" id="download">
+        <div class="eyebrow"><span class="dot"></span> <span data-i18n="hero.eyebrow">In private beta · join the waitlist</span></div>
+        <h1 data-i18n="hero.title">Build <span class="accent">Trust</span> Through Payments</h1>
+        <p class="lead" data-i18n="hero.lead">Track shared expenses, confirm payments, and build a reputation with friends and family — without any money ever passing through the app.</p>
+        <div class="buttons">
+            <button type="button" class="store-button ios" data-open-beta="ios">
+                <svg viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+                <span class="label"><small data-i18n="hero.join_beta">Join the beta on</small><strong>App Store</strong></span>
+            </button>
+            <button type="button" class="store-button android" data-open-beta="android">
+                <svg viewBox="0 0 512 512" fill="currentColor"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
+                <span class="label"><small data-i18n="hero.notify_for">Notify me for</small><strong>Google Play</strong></span>
+            </button>
+        </div>
+        <p class="platform-note" data-i18n="hero.note">Sign up to get notified the moment Trust Orbit is ready for you</p>
+    </section>
+
+    <!-- Beta signup modal -->
+    <div class="beta-modal-overlay" id="beta-modal-overlay">
+        <div class="beta-modal">
+            <button type="button" class="beta-modal-close" id="beta-modal-close" aria-label="Close">✕</button>
+            <div class="beta-modal-icon">🚀</div>
+            <h3 data-i18n="beta.title">Join the Beta</h3>
+            <p data-i18n="beta.body">Leave your email and we'll notify you the moment Trust Orbit is ready for your platform.</p>
+            <form id="beta-form">
+                <input type="email" id="beta-email" placeholder="you@email.com" required>
+                <button type="submit" id="beta-submit" data-i18n="beta.submit">Notify Me</button>
+            </form>
+            <p class="beta-status" id="beta-status"></p>
+        </div>
+    </div>
+
+    <!-- How it works -->
+    <section class="section" id="how">
+        <div class="section-head">
+            <div class="kicker" data-i18n="how.kicker">How it works</div>
+            <h2 data-i18n="how.title">Three steps to squared accounts</h2>
+        </div>
+        <div class="steps">
+            <div class="step">
+                <div class="num">1</div>
+                <h3 data-i18n="how.step1_title">Record a charge</h3>
+                <p data-i18n="how.step1_body">Log who owes what, for what, and how much — split between friends, roommates, or a group.</p>
+            </div>
+            <div class="step">
+                <div class="num">2</div>
+                <h3 data-i18n="how.step2_title">Pay outside the app</h3>
+                <p data-i18n="how.step2_body">Settle up however you already do — cash, bank transfer, SINPE. Trust Orbit never touches the money.</p>
+            </div>
+            <div class="step">
+                <div class="num">3</div>
+                <h3 data-i18n="how.step3_title">Confirm together</h3>
+                <p data-i18n="how.step3_body">Both sides confirm the payment happened. Only then does it count toward your trust score.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section" id="features">
+        <div class="section-head">
+            <div class="kicker" data-i18n="features.kicker">Features</div>
+            <h2 data-i18n="features.title">Everything you need to stay square</h2>
+            <p data-i18n="features.lead">Built for friends, roommates, and family who share expenses.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="icon">📝</div>
+                <h3 data-i18n="feat1.title">Record Charges</h3>
+                <p data-i18n="feat1.body">Create a charge when someone owes you money. Track who owes what with complete transparency.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">💰</div>
+                <h3 data-i18n="feat2.title">Confirm Payments</h3>
+                <p data-i18n="feat2.body">Mark payments as paid and let the other person confirm receipt. Both sides must agree before it counts.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">⭐</div>
+                <h3 data-i18n="feat3.title">Build Your Score</h3>
+                <p data-i18n="feat3.body">Your trust score grows with confirmed payments — a reputation signal for friends, not a credit score.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">👥</div>
+                <h3 data-i18n="feat4.title">Friends & Groups</h3>
+                <p data-i18n="feat4.body">Connect with friends and family, split group expenses, and settle up balances in one place.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">💳</div>
+                <h3 data-i18n="feat5.title">Payment Methods</h3>
+                <p data-i18n="feat5.body">Store your SINPE or bank details so others know exactly how to pay you back — shared only when needed.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🔔</div>
+                <h3 data-i18n="feat6.title">Smart Reminders</h3>
+                <p data-i18n="feat6.body">Optional push notifications keep everyone honest about payments coming due.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security -->
+    <section class="section" id="security">
+        <div class="security-section">
+            <div class="section-head">
+                <div class="kicker" data-i18n="security.kicker">Security & Privacy</div>
+                <h2 data-i18n="security.title">We never touch your money</h2>
+                <p data-i18n="security.lead">Trust Orbit is a ledger, not a bank. Here's exactly what that means.</p>
+            </div>
+            <div class="security-grid">
+                <div class="security-item">
+                    <div class="check">✓</div>
+                    <div>
+                        <h4 data-i18n="sec1.title">No money moves through the app</h4>
+                        <p data-i18n="sec1.body">You settle up directly with your counterparty — cash, bank transfer, or SINPE.</p>
+                    </div>
+                </div>
+                <div class="security-item">
+                    <div class="check">✓</div>
+                    <div>
+                        <h4 data-i18n="sec2.title">You control visibility</h4>
+                        <p data-i18n="sec2.body">Your trust score is visible to friends by default. Public profile is opt-in, off by default.</p>
+                    </div>
+                </div>
+                <div class="security-item">
+                    <div class="check">✓</div>
+                    <div>
+                        <h4 data-i18n="sec3.title">No biometric data collected</h4>
+                        <p data-i18n="sec3.body">Face ID / fingerprint app-lock happens entirely on your device — we never see it.</p>
+                    </div>
+                </div>
+                <div class="security-item">
+                    <div class="check">✓</div>
+                    <div>
+                        <h4 data-i18n="sec4.title">We don't sell your data</h4>
+                        <p data-i18n="sec4.body">No ad targeting, no data brokers. Ever.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+        <div class="section-head">
+            <div class="kicker" data-i18n="faq.kicker">FAQ</div>
+            <h2 data-i18n="faq.title">Common questions</h2>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span data-i18n="faqq1">Is Trust Orbit a bank or payment processor?</span>
+                    <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="faq-answer"><p data-i18n="faqa1">No. Trust Orbit is a social ledger and reputation app. No money ever moves through the app — you and your counterparty settle up entirely on your own, outside of Trust Orbit.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span data-i18n="faqq2">When is Trust Orbit coming to Android?</span>
+                    <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="faq-answer"><p data-i18n="faqa2">Trust Orbit is currently in private beta on iOS, with Android in active development. Join the waitlist above and we'll email you the moment either is ready.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span data-i18n="faqq3">Is Trust Orbit free?</span>
+                    <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="faq-answer"><p data-i18n="faqa3">Yes, Trust Orbit is free to download and use. An optional Pro tier with additional features may be offered in the future.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span data-i18n="faqq4">What is a "trust score"?</span>
+                    <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="faq-answer"><p data-i18n="faqa4">A reputational signal (1.0–5.0) based on your history of mutually confirmed payments inside the app. It's not a credit score or a financial background check.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span data-i18n="faqq5">Who can see my information?</span>
+                    <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="faq-answer"><p data-i18n="faqa5">By default, your trust score is visible only to friends you've accepted. Payment method details are shown only to the counterparty on an active charge — never publicly.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PetOrbit -->
+    <section class="section" id="petorbit">
+        <div class="section-head">
+            <div class="kicker" data-i18n="petorbit.kicker">Orbit Labs</div>
+            <h2 data-i18n="petorbit.title">Also Building: PetOrbit</h2>
+            <p data-i18n="petorbit.lead">A digital identity for pets, from the same team behind Trust Orbit.</p>
+        </div>
+        <div class="petorbit-card">
+            <div class="petorbit-icon">🐾</div>
+            <div class="petorbit-content">
+                <h3 data-i18n="petorbit.name">PetOrbit</h3>
+                <p data-i18n="petorbit.body">NFC Smart Tags that link to your pet's public profile. If they're ever lost, anyone who finds them can scan the tag — no app required — and reach you instantly with their location.</p>
+                <ul class="petorbit-features">
+                    <li data-i18n="petorbit.f1">📍 Lost &amp; found reports with a nearby map</li>
+                    <li data-i18n="petorbit.f2">🏷️ One NFC/QR tag, one public pet profile</li>
+                    <li data-i18n="petorbit.f3">🩺 Medical info &amp; emergency contacts, private by default</li>
+                </ul>
+                <a href="https://www.instagram.com/_petorbit_/" target="_blank" rel="noopener noreferrer" class="cta-button" data-i18n="petorbit.cta">Follow @_petorbit_ on Instagram</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Legal -->
+    <section class="section" id="legal">
+        <div class="section-head">
+            <div class="kicker" data-i18n="legal.kicker">Legal</div>
+            <h2 data-i18n="legal.title">Legal Documents</h2>
+        </div>
+        <div class="legal-grid">
+            <div class="legal-card">
+                <h3 data-i18n="legal1.title">📋 Terms of Service</h3>
+                <p data-i18n="legal1.body">Everything you need to know about using Trust Orbit and how the app works.</p>
+                <div class="legal-links">
+                    <a href="/terms-en.html" class="en">Read in English</a>
+                    <a href="/terms-es.html" class="es">Leer en Español</a>
+                </div>
+            </div>
+            <div class="legal-card">
+                <h3 data-i18n="legal2.title">🔒 Privacy Policy</h3>
+                <p data-i18n="legal2.body">How we collect, use, and protect your personal information and data.</p>
+                <div class="legal-links">
+                    <a href="/privacy-en.html" class="en">Read in English</a>
+                    <a href="/privacy-es.html" class="es">Leer en Español</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-top">
+                <a href="/" class="logo">
+                    <img src="/assets/logo.png" alt="Trust Orbit">
+                    <span class="logo-text">Trust <span class="accent">Orbit</span></span>
+                </a>
+                <ul class="footer-links">
+                    <li><a href="#features" data-i18n="nav.features">Features</a></li>
+                    <li><a href="#security" data-i18n="nav.security">Security</a></li>
+                    <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
+                    <li><a href="#petorbit" data-i18n="nav.petorbit">PetOrbit</a></li>
+                    <li><a href="/terms-en.html" data-i18n="footer.terms">Terms</a></li>
+                    <li><a href="/privacy-en.html" data-i18n="footer.privacy">Privacy</a></li>
+                    <li><a href="mailto:kemridecr@icloud.com" data-i18n="footer.contact">Contact</a></li>
+                </ul>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/_petorbit_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span data-i18n="footer.company">Trust Orbit · Costa Rica</span>
+                <span>© 2026 Trust Orbit. <span data-i18n="footer.rights">All rights reserved.</span></span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+
+        const translations = {
+            en: {
+                'nav.features': 'Features', 'nav.security': 'Security', 'nav.faq': 'FAQ', 'nav.petorbit': 'PetOrbit', 'nav.legal': 'Legal', 'nav.cta': 'Get the App',
+                'hero.eyebrow': 'In private beta · join the waitlist',
+                'hero.title': 'Build <span class="accent">Trust</span> Through Payments',
+                'hero.lead': 'Track shared expenses, confirm payments, and build a reputation with friends and family — without any money ever passing through the app.',
+                'hero.join_beta': 'Join the beta on', 'hero.notify_for': 'Notify me for',
+                'hero.note': "Sign up to get notified the moment Trust Orbit is ready for you",
+                'beta.title': 'Join the Beta', 'beta.body': "Leave your email and we'll notify you the moment Trust Orbit is ready for your platform.",
+                'beta.submit': 'Notify Me', 'beta.success': "You're on the list! We'll email you when it's ready.", 'beta.error': 'Something went wrong. Please try again.',
+                'how.kicker': 'How it works', 'how.title': 'Three steps to squared accounts',
+                'how.step1_title': 'Record a charge', 'how.step1_body': 'Log who owes what, for what, and how much — split between friends, roommates, or a group.',
+                'how.step2_title': 'Pay outside the app', 'how.step2_body': 'Settle up however you already do — cash, bank transfer, SINPE. Trust Orbit never touches the money.',
+                'how.step3_title': 'Confirm together', 'how.step3_body': 'Both sides confirm the payment happened. Only then does it count toward your trust score.',
+                'features.kicker': 'Features', 'features.title': 'Everything you need to stay square', 'features.lead': 'Built for friends, roommates, and family who share expenses.',
+                'feat1.title': 'Record Charges', 'feat1.body': 'Create a charge when someone owes you money. Track who owes what with complete transparency.',
+                'feat2.title': 'Confirm Payments', 'feat2.body': 'Mark payments as paid and let the other person confirm receipt. Both sides must agree before it counts.',
+                'feat3.title': 'Build Your Score', 'feat3.body': 'Your trust score grows with confirmed payments — a reputation signal for friends, not a credit score.',
+                'feat4.title': 'Friends & Groups', 'feat4.body': 'Connect with friends and family, split group expenses, and settle up balances in one place.',
+                'feat5.title': 'Payment Methods', 'feat5.body': 'Store your SINPE or bank details so others know exactly how to pay you back — shared only when needed.',
+                'feat6.title': 'Smart Reminders', 'feat6.body': 'Optional push notifications keep everyone honest about payments coming due.',
+                'security.kicker': 'Security & Privacy', 'security.title': 'We never touch your money', 'security.lead': "Trust Orbit is a ledger, not a bank. Here's exactly what that means.",
+                'sec1.title': 'No money moves through the app', 'sec1.body': 'You settle up directly with your counterparty — cash, bank transfer, or SINPE.',
+                'sec2.title': 'You control visibility', 'sec2.body': 'Your trust score is visible to friends by default. Public profile is opt-in, off by default.',
+                'sec3.title': 'No biometric data collected', 'sec3.body': 'Face ID / fingerprint app-lock happens entirely on your device — we never see it.',
+                'sec4.title': "We don't sell your data", 'sec4.body': 'No ad targeting, no data brokers. Ever.',
+                'faq.kicker': 'FAQ', 'faq.title': 'Common questions',
+                'faqq1': 'Is Trust Orbit a bank or payment processor?', 'faqa1': 'No. Trust Orbit is a social ledger and reputation app. No money ever moves through the app — you and your counterparty settle up entirely on your own, outside of Trust Orbit.',
+                'faqq2': 'When is Trust Orbit coming to Android?', 'faqa2': "Trust Orbit is currently in private beta on iOS, with Android in active development. Join the waitlist above and we'll email you the moment either is ready.",
+                'faqq3': 'Is Trust Orbit free?', 'faqa3': 'Yes, Trust Orbit is free to download and use. An optional Pro tier with additional features may be offered in the future.',
+                'faqq4': 'What is a "trust score"?', 'faqa4': "A reputational signal (1.0–5.0) based on your history of mutually confirmed payments inside the app. It's not a credit score or a financial background check.",
+                'faqq5': 'Who can see my information?', 'faqa5': "By default, your trust score is visible only to friends you've accepted. Payment method details are shown only to the counterparty on an active charge — never publicly.",
+                'petorbit.kicker': 'Orbit Labs', 'petorbit.title': 'Also Building: PetOrbit', 'petorbit.lead': 'A digital identity for pets, from the same team behind Trust Orbit.',
+                'petorbit.name': 'PetOrbit', 'petorbit.body': "NFC Smart Tags that link to your pet's public profile. If they're ever lost, anyone who finds them can scan the tag — no app required — and reach you instantly with their location.",
+                'petorbit.f1': '📍 Lost &amp; found reports with a nearby map', 'petorbit.f2': '🏷️ One NFC/QR tag, one public pet profile', 'petorbit.f3': '🩺 Medical info &amp; emergency contacts, private by default',
+                'petorbit.cta': 'Follow @_petorbit_ on Instagram',
+                'legal.kicker': 'Legal', 'legal.title': 'Legal Documents',
+                'legal1.title': '📋 Terms of Service', 'legal1.body': 'Everything you need to know about using Trust Orbit and how the app works.',
+                'legal2.title': '🔒 Privacy Policy', 'legal2.body': 'How we collect, use, and protect your personal information and data.',
+                'footer.terms': 'Terms', 'footer.privacy': 'Privacy', 'footer.contact': 'Contact',
+                'footer.company': 'Trust Orbit · Costa Rica', 'footer.rights': 'All rights reserved.',
+            },
+            es: {
+                'nav.features': 'Funciones', 'nav.security': 'Seguridad', 'nav.faq': 'Preguntas', 'nav.petorbit': 'PetOrbit', 'nav.legal': 'Legal', 'nav.cta': 'Obtener la App',
+                'hero.eyebrow': 'En beta privada · únete a la lista de espera',
+                'hero.title': 'Construye <span class="accent">Confianza</span> a Través de Pagos',
+                'hero.lead': 'Registra gastos compartidos, confirma pagos y construye una reputación con amigos y familia — sin que ningún dinero pase jamás por la app.',
+                'hero.join_beta': 'Únete a la beta en', 'hero.notify_for': 'Notifícame para',
+                'hero.note': 'Regístrate para que te avisemos en cuanto Trust Orbit esté listo para ti',
+                'beta.title': 'Únete a la Beta', 'beta.body': 'Déjanos tu correo y te avisaremos en cuanto Trust Orbit esté listo para tu plataforma.',
+                'beta.submit': 'Notificarme', 'beta.success': '¡Ya estás en la lista! Te escribiremos cuando esté listo.', 'beta.error': 'Algo salió mal. Inténtalo de nuevo.',
+                'how.kicker': 'Cómo funciona', 'how.title': 'Tres pasos para cuadrar cuentas',
+                'how.step1_title': 'Registra un cargo', 'how.step1_body': 'Anota quién debe qué, por qué y cuánto — divide entre amigos, compañeros de casa o un grupo.',
+                'how.step2_title': 'Paga fuera de la app', 'how.step2_body': 'Salda la cuenta como ya lo haces — efectivo, transferencia bancaria, SINPE. Trust Orbit nunca toca el dinero.',
+                'how.step3_title': 'Confirmen juntos', 'how.step3_body': 'Ambas partes confirman que el pago ocurrió. Solo entonces cuenta para tu puntaje de confianza.',
+                'features.kicker': 'Funciones', 'features.title': 'Todo lo que necesitas para estar al día', 'features.lead': 'Hecho para amigos, compañeros de casa y familia que comparten gastos.',
+                'feat1.title': 'Registra Cargos', 'feat1.body': 'Crea un cargo cuando alguien te debe dinero. Lleva el control de quién debe qué con total transparencia.',
+                'feat2.title': 'Confirma Pagos', 'feat2.body': 'Marca los pagos como realizados y deja que la otra persona confirme la recepción. Ambos deben estar de acuerdo para que cuente.',
+                'feat3.title': 'Construye tu Puntaje', 'feat3.body': 'Tu puntaje de confianza crece con los pagos confirmados — una señal de reputación entre amigos, no un puntaje crediticio.',
+                'feat4.title': 'Amigos y Grupos', 'feat4.body': 'Conéctate con amigos y familia, divide gastos grupales y salda balances en un solo lugar.',
+                'feat5.title': 'Métodos de Pago', 'feat5.body': 'Guarda tus datos de SINPE o cuenta bancaria para que otros sepan cómo pagarte — compartido solo cuando se necesita.',
+                'feat6.title': 'Recordatorios Inteligentes', 'feat6.body': 'Las notificaciones push opcionales mantienen a todos al tanto de los pagos próximos.',
+                'security.kicker': 'Seguridad y Privacidad', 'security.title': 'Nunca tocamos tu dinero', 'security.lead': 'Trust Orbit es un registro, no un banco. Esto es exactamente lo que eso significa.',
+                'sec1.title': 'Ningún dinero pasa por la app', 'sec1.body': 'Saldas la cuenta directamente con tu contraparte — efectivo, transferencia bancaria o SINPE.',
+                'sec2.title': 'Tú controlas la visibilidad', 'sec2.body': 'Tu puntaje de confianza es visible para tus amigos por defecto. El perfil público es opcional y está desactivado por defecto.',
+                'sec3.title': 'No recopilamos datos biométricos', 'sec3.body': 'El bloqueo con Face ID / huella ocurre completamente en tu dispositivo — nunca lo vemos.',
+                'sec4.title': 'No vendemos tus datos', 'sec4.body': 'Sin segmentación publicitaria, sin corredores de datos. Nunca.',
+                'faq.kicker': 'Preguntas', 'faq.title': 'Preguntas frecuentes',
+                'faqq1': '¿Trust Orbit es un banco o procesador de pagos?', 'faqa1': 'No. Trust Orbit es una aplicación de registro social y reputación. Ningún dinero pasa por la app — tú y tu contraparte se ponen de acuerdo por su cuenta, fuera de Trust Orbit.',
+                'faqq2': '¿Cuándo llega Trust Orbit a Android?', 'faqa2': 'Trust Orbit está actualmente en beta privada en iOS, con Android en desarrollo activo. Únete a la lista de espera arriba y te avisaremos por correo en cuanto cualquiera esté lista.',
+                'faqq3': '¿Trust Orbit es gratis?', 'faqa3': 'Sí, Trust Orbit es gratis para descargar y usar. En el futuro podríamos ofrecer un nivel Pro opcional con funciones adicionales.',
+                'faqq4': '¿Qué es un "puntaje de confianza"?', 'faqa4': 'Una señal reputacional (1.0–5.0) basada en tu historial de pagos confirmados mutuamente dentro de la app. No es un puntaje crediticio ni una verificación de antecedentes financieros.',
+                'faqq5': '¿Quién puede ver mi información?', 'faqa5': 'Por defecto, tu puntaje de confianza es visible solo para los amigos que has aceptado. Los detalles del método de pago se muestran solo a la contraparte de un cargo activo — nunca públicamente.',
+                'petorbit.kicker': 'Orbit Labs', 'petorbit.title': 'También Estamos Construyendo: PetOrbit', 'petorbit.lead': 'Una identidad digital para mascotas, del mismo equipo detrás de Trust Orbit.',
+                'petorbit.name': 'PetOrbit', 'petorbit.body': 'Smart Tags NFC que enlazan al perfil público de tu mascota. Si alguna vez se pierde, quien la encuentre puede escanear la placa — sin necesidad de instalar ninguna app — y contactarte al instante con su ubicación.',
+                'petorbit.f1': '📍 Reportes de mascotas perdidas/encontradas con mapa cercano', 'petorbit.f2': '🏷️ Una placa NFC/QR, un perfil público de mascota', 'petorbit.f3': '🩺 Información médica y contactos de emergencia, privados por defecto',
+                'petorbit.cta': 'Síguenos @_petorbit_ en Instagram',
+                'legal.kicker': 'Legal', 'legal.title': 'Documentos Legales',
+                'legal1.title': '📋 Términos de Servicio', 'legal1.body': 'Todo lo que necesitas saber sobre el uso de Trust Orbit y cómo funciona la app.',
+                'legal2.title': '🔒 Política de Privacidad', 'legal2.body': 'Cómo recopilamos, usamos y protegemos tu información personal y datos.',
+                'footer.terms': 'Términos', 'footer.privacy': 'Privacidad', 'footer.contact': 'Contacto',
+                'footer.company': 'Trust Orbit · Costa Rica', 'footer.rights': 'Todos los derechos reservados.',
+            }
+        };
+
+        function applyLang(lang) {
+            document.documentElement.lang = lang;
+            localStorage.setItem('trustorbit_lang', lang);
+            document.querySelectorAll('[data-lang-btn]').forEach(b => b.classList.toggle('active', b.dataset.langBtn === lang));
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                const text = translations[lang][key];
+                if (text !== undefined) el.innerHTML = text;
+            });
+        }
+
+        document.querySelectorAll('[data-lang-btn]').forEach(btn => {
+            btn.addEventListener('click', () => applyLang(btn.dataset.langBtn));
+        });
+
+        const savedLang = localStorage.getItem('trustorbit_lang');
+        const browserLang = navigator.language?.startsWith('es') ? 'es' : 'en';
+        applyLang(savedLang || browserLang);
+
+        // FAQ accordion
+        document.querySelectorAll('.faq-question').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.closest('.faq-item');
+                const wasOpen = item.classList.contains('open');
+                document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+                if (!wasOpen) item.classList.add('open');
+            });
+        });
+
+        // Beta signup modal
+        const SUPABASE_URL = 'https://moxqbmukahqmturvlzkz.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1veHFibXVrYWhxbXR1cnZsemt6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMjI3MzgsImV4cCI6MjA5ODU5ODczOH0.6QztdS8tPf3c7PJ6Zg1xdw6kCkF8UPAJQomARfeJ6SE';
+
+        const betaOverlay = document.getElementById('beta-modal-overlay');
+        const betaForm = document.getElementById('beta-form');
+        const betaEmail = document.getElementById('beta-email');
+        const betaSubmit = document.getElementById('beta-submit');
+        const betaStatus = document.getElementById('beta-status');
+        let betaPlatform = 'unspecified';
+
+        function openBetaModal(platform) {
+            betaPlatform = platform || 'unspecified';
+            betaStatus.textContent = '';
+            betaStatus.className = 'beta-status';
+            betaSubmit.disabled = false;
+            betaOverlay.classList.add('open');
+            setTimeout(() => betaEmail.focus(), 50);
+        }
+
+        function closeBetaModal() {
+            betaOverlay.classList.remove('open');
+        }
+
+        document.querySelectorAll('[data-open-beta]').forEach(btn => {
+            btn.addEventListener('click', () => openBetaModal(btn.dataset.openBeta));
+        });
+
+        document.getElementById('beta-modal-close').addEventListener('click', closeBetaModal);
+        betaOverlay.addEventListener('click', (e) => {
+            if (e.target === betaOverlay) closeBetaModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeBetaModal();
+        });
+
+        betaForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = betaEmail.value.trim();
+            if (!email) return;
+
+            betaSubmit.disabled = true;
+            const lang = document.documentElement.lang === 'es' ? 'es' : 'en';
+            const submittingText = lang === 'es' ? 'Enviando…' : 'Submitting…';
+            betaSubmit.textContent = submittingText;
+
+            try {
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/beta_signups`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal',
+                    },
+                    body: JSON.stringify({ email, platform: betaPlatform }),
+                });
+
+                // 201 = inserted, 409 = duplicate email (already on the list) — both count as success
+                if (res.ok || res.status === 409) {
+                    betaStatus.textContent = translations[lang]['beta.success'];
+                    betaStatus.className = 'beta-status success';
+                    betaForm.reset();
+                    setTimeout(closeBetaModal, 1800);
+                } else {
+                    throw new Error('Request failed');
+                }
+            } catch (err) {
+                betaStatus.textContent = translations[lang]['beta.error'];
+                betaStatus.className = 'beta-status error';
+                betaSubmit.disabled = false;
+            } finally {
+                betaSubmit.textContent = translations[lang]['beta.submit'];
+            }
+        });
+    </script>
+</body>
+</html>
