@@ -104,6 +104,13 @@
         .store.primary .lbl small { color: rgba(255,255,255,.8); }
         .store .lbl strong { font-size: 15px; }
         .hero .note { margin-top: 16px; color: var(--faint); font-size: 13px; }
+        .android-form { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        .android-form[hidden] { display: none; }
+        .android-form input[type="email"] { flex: 1 1 220px; padding: 11px 16px; border-radius: 13px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font-size: 14px; font: inherit; }
+        .android-form input[type="email"]:focus { outline: none; border-color: var(--blue-bright); }
+        .android-form-status { width: 100%; font-size: 13px; color: var(--faint); margin: 0; }
+        .android-form-status.ok { color: var(--green); }
+        .android-form-status.error { color: #F87171; }
 
         /* Phone with a rendered Trust Orbit screen */
         .phone { position: relative; width: 100%; max-width: 290px; margin: 0 auto; aspect-ratio: 430 / 900; border-radius: 40px; padding: 10px; background: linear-gradient(160deg, #1c2740, #0b1120); border: 1px solid rgba(255,255,255,.12); box-shadow: 0 40px 90px -30px rgba(0,0,0,.85); }
@@ -241,11 +248,16 @@
                     <svg viewBox="0 0 24 24" fill="#fff"><path d="M17.05 12.5c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.78-3.32-1.8-1.42-.14-2.76.83-3.48.83-.72 0-1.82-.81-2.99-.79-1.54.02-2.96.9-3.75 2.28-1.6 2.78-.41 6.9 1.15 9.16.76 1.1 1.67 2.35 2.86 2.3 1.15-.05 1.58-.74 2.97-.74 1.39 0 1.78.74 2.99.72 1.24-.02 2.02-1.13 2.78-2.24.88-1.28 1.24-2.52 1.26-2.58-.03-.01-2.42-.93-2.44-3.68zM14.7 5.3c.63-.77 1.06-1.83.94-2.9-.91.04-2.02.61-2.68 1.37-.59.68-1.11 1.77-.97 2.81 1.02.08 2.06-.52 2.71-1.28z"/></svg>
                     <span class="lbl"><small data-i18n="joinBeta">Join the beta on</small><strong>App Store</strong></span>
                 </a>
-                <a class="store" href="mailto:support@trustsorbit.app?subject=Trust%20Orbit%20Android">
+                <button type="button" class="store" id="androidNotifyBtn" aria-expanded="false" aria-controls="androidForm">
                     <svg viewBox="0 0 24 24" fill="none"><path d="M5 4l14 8-14 8V4z" fill="#60A5FA"/></svg>
                     <span class="lbl"><small data-i18n="notifyFor">Notify me for</small><strong>Google Play</strong></span>
-                </a>
+                </button>
             </div>
+            <form class="android-form reveal d3" id="androidForm" hidden>
+                <input type="email" id="androidEmail" required inputmode="email" autocomplete="email" data-i18n-placeholder="androidEmailPlaceholder" placeholder="you@email.com" />
+                <button type="submit" class="btn btn-primary" id="androidSubmitBtn" data-i18n="androidSubmit">Notify me</button>
+                <p class="android-form-status" id="androidFormStatus" role="status"></p>
+            </form>
             <p class="note reveal d3" data-i18n="heroNote">Sign up to get notified the moment Trust Orbit is ready for you.</p>
         </div>
         <div class="reveal d2">
@@ -417,6 +429,10 @@
                 heroLead:"Track shared expenses, confirm payments, and build a reputation with friends and family, without any money ever passing through the app.",
                 joinBeta:"Join the beta on", notifyFor:"Notify me for",
                 heroNote:"Sign up to get notified the moment Trust Orbit is ready for you.",
+                androidEmailPlaceholder:"you@email.com", androidSubmit:"Notify me",
+                androidSuccess:"You're on the list! We'll reach out soon with access.",
+                androidError:"Something went wrong. Please try again.",
+                androidInvalid:"Please enter a valid email address.",
                 scYour:"Your trust", scScore:"Trust score",
                 scR1t:"Ana confirmed dinner", scR1s:"Split 3 ways · settled",
                 scR2t:"Luis owes you", scR2s:"Awaiting his confirm",
@@ -457,6 +473,10 @@
                 heroLead:"Registrá gastos compartidos, confirmá pagos y construí una reputación con amigos y familia, sin que el dinero pase nunca por la app.",
                 joinBeta:"Unite a la beta en", notifyFor:"Avisame para",
                 heroNote:"Registrate y te avisamos apenas Trust Orbit esté listo para vos.",
+                androidEmailPlaceholder:"tu@correo.com", androidSubmit:"Avisarme",
+                androidSuccess:"¡Listo! Te vamos a escribir pronto con el acceso.",
+                androidError:"Algo salió mal. Intentá de nuevo.",
+                androidInvalid:"Ingresá un correo válido.",
                 scYour:"Tu confianza", scScore:"Trust score",
                 scR1t:"Ana confirmó la cena", scR1s:"Dividido entre 3 · saldado",
                 scR2t:"Luis te debe", scR2s:"Esperando su confirmación",
@@ -496,6 +516,7 @@
             document.documentElement.lang = lang;
             document.querySelectorAll('[data-i18n]').forEach(function (el) { var k = el.getAttribute('data-i18n'); if (d[k] != null) el.textContent = d[k]; });
             document.querySelectorAll('[data-i18n-html]').forEach(function (el) { var k = el.getAttribute('data-i18n-html'); if (d[k] != null) el.innerHTML = d[k]; });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) { var k = el.getAttribute('data-i18n-placeholder'); if (d[k] != null) el.placeholder = d[k]; });
             document.querySelectorAll('.lang button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === lang)); });
             try { localStorage.setItem('ol_lang', lang); } catch (e) {}
         }
@@ -521,6 +542,68 @@
                 entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
             }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
             document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+        }
+
+        /* Android beta signup */
+        var SUPABASE_URL = 'https://moxqbmukahqmturvlzkz.supabase.co';
+        var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1veHFibXVrYWhxbXR1cnZsemt6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMjI3MzgsImV4cCI6MjA5ODU5ODczOH0.6QztdS8tPf3c7PJ6Zg1xdw6kCkF8UPAJQomARfeJ6SE';
+        var androidBtn = document.getElementById('androidNotifyBtn');
+        var androidForm = document.getElementById('androidForm');
+        var androidEmail = document.getElementById('androidEmail');
+        var androidStatus = document.getElementById('androidFormStatus');
+        var androidSubmitBtn = document.getElementById('androidSubmitBtn');
+        if (androidBtn && androidForm) {
+            androidBtn.addEventListener('click', function () {
+                var willShow = androidForm.hasAttribute('hidden');
+                if (willShow) { androidForm.removeAttribute('hidden'); androidEmail.focus(); }
+                else { androidForm.setAttribute('hidden', ''); }
+                androidBtn.setAttribute('aria-expanded', String(willShow));
+            });
+            androidForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                var d = I18N[document.documentElement.lang] || I18N.en;
+                var email = androidEmail.value.trim();
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    androidStatus.textContent = d.androidInvalid;
+                    androidStatus.className = 'android-form-status error';
+                    return;
+                }
+                androidSubmitBtn.disabled = true;
+                androidStatus.textContent = '';
+                androidStatus.className = 'android-form-status';
+
+                // Fire the mailto INSIDE the click's own call stack, before any
+                // async work — browsers (especially mobile Safari) stop treating
+                // a navigation as user-initiated once it happens inside a fetch()
+                // .then() callback, and silently drop it. Support@trustsorbit.app
+                // now delivers straight to the founder's iCloud custom-domain inbox.
+                var subject = encodeURIComponent('Trust Orbit Android beta signup');
+                var body = encodeURIComponent('Please add me to the Android closed test:\n\n' + email);
+                window.location.href = 'mailto:support@trustsorbit.app?subject=' + subject + '&body=' + body;
+
+                fetch(SUPABASE_URL + '/rest/v1/beta_signups', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify({ email: email, platform: 'android' })
+                }).then(function (res) {
+                    if (!res.ok) throw new Error('insert failed');
+                    androidEmail.value = '';
+                    androidSubmitBtn.hidden = true;
+                    androidEmail.hidden = true;
+                    androidStatus.textContent = d.androidSuccess;
+                    androidStatus.className = 'android-form-status ok';
+                }).catch(function () {
+                    androidStatus.textContent = d.androidError;
+                    androidStatus.className = 'android-form-status error';
+                }).finally(function () {
+                    androidSubmitBtn.disabled = false;
+                });
+            });
         }
     })();
     </script>
