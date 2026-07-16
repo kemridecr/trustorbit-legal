@@ -314,6 +314,14 @@
             <nav>
                 <a href="terms-en.html" data-i18n="terms">Terms</a>
                 <a href="privacy-en.html" data-i18n="privacy">Privacy</a>
+                <!-- Support links to a real page, not a mailto. Apple rejected the
+                     app (guideline 1.5) because this URL "does not direct to a
+                     website with information users can use to ask questions and
+                     request support" — a bare mailto in a footer isn't support
+                     information, and Cloudflare's email protection rewrote it to
+                     /cdn-cgi/l/email-protection#… so the address wasn't even
+                     visible without JS. -->
+                <a href="support-en.html" data-i18n="support">Support</a>
                 <a href="mailto:support@trustsorbit.app" data-i18n="contact">Contact</a>
             </nav>
         </footer>
@@ -336,7 +344,7 @@
                 petTag: "Bring lost pets home in minutes. A premium NFC tag linked to your pet's digital identity.",
                 enter: "Enter",
                 rights: "© 2026 Orbit Labs · San José, Costa Rica",
-                terms: "Terms", privacy: "Privacy", contact: "Contact"
+                terms: "Terms", privacy: "Privacy", support: "Support", contact: "Contact"
             },
             es: {
                 kicker: "Orbit Labs · Costa Rica",
@@ -346,7 +354,7 @@
                 petTag: "Que tu mascota vuelva a casa en minutos. Una placa NFC premium ligada a su identidad digital.",
                 enter: "Entrar",
                 rights: "© 2026 Orbit Labs · San José, Costa Rica",
-                terms: "Términos", privacy: "Privacidad", contact: "Contacto"
+                terms: "Términos", privacy: "Privacidad", support: "Soporte", contact: "Contacto"
             }
         };
         function applyLang(lang) {
