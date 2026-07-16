@@ -413,15 +413,38 @@
         /* ---------- Entrance ---------- */
         requestAnimationFrame(function(){ document.querySelector('main').classList.add('in'); });
 
-        /* ---------- Click-through warp ---------- */
+        /* ---------- Doors drive the sky ---------- */
         var warp = document.querySelector('.warp');
         document.querySelectorAll('.door').forEach(function (d) {
+            var key = d.getAttribute('data-warp');   // 'trust' | 'pet'
+
+            /* Hovering a door lights its planet and its orbit. The sibling-dim
+               already made choosing feel like ATTENDING to something; this
+               extends that attention into the background, so the thing you're
+               considering is visibly the thing orbiting. */
+            function on()  { if (window.__orbit) window.__orbit.hover(key); }
+            function off() { if (window.__orbit) window.__orbit.hover(null); }
+            d.addEventListener('pointerenter', on);
+            d.addEventListener('pointerleave', off);
+            d.addEventListener('focus', on);
+            d.addEventListener('blur', off);
+
             d.addEventListener('click', function (e) {
                 if (reduce) return; // let the browser navigate normally
+                /* Never hijack a modifier click. Cmd/Ctrl+click is exactly the
+                   gesture someone comparing two products reaches for, and this
+                   page's whole thesis is "compare these two" — swallowing it
+                   broke the one gesture the page exists to invite. */
+                if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
                 e.preventDefault();
                 var href = d.getAttribute('href');
-                warp.classList.add(d.getAttribute('data-warp'), 'on');
-                setTimeout(function () { window.location.href = href; }, 440);
+                /* Fly INTO the planet rather than flashing its colour over
+                   everything. Same 440ms beat, but the transition now shows what
+                   it means: you're going to that world. The warp stays underneath
+                   as the colour bed the zoom lands on. */
+                if (window.__orbit) window.__orbit.fly(key);
+                warp.classList.add(key, 'on');
+                setTimeout(function () { window.location.href = href; }, 620);
             });
         });
 
@@ -430,10 +453,21 @@
         var canvas = document.getElementById('sky');
         var ctx = canvas.getContext('2d');
         var W, H, DPR, cx, cy, unit, stars = [];
+        /* Each body IS a product, not a decoration wearing its colour. `key`
+           binds it to its door, and `lit` is how much that door is being
+           attended to right now — hover one and its planet answers.
+           Before this the two bodies orbited an anonymous white core, coloured
+           like the products and connected to nothing: the page said "choose
+           your orbit" over an orbit that had nothing to do with the choice. */
         var bodies = [
-            { color: '139,92,246',  a: 0,        speed: 0.16, rx: 0.40, ry: 0.155, tilt: -0.32, size: 6.5, trail: [] }, // trust
-            { color: '249,115,22',  a: Math.PI,  speed: 0.24, rx: 0.28, ry: 0.30,  tilt: 0.55,  size: 5.5, trail: [] }  // pet
+            { key: 'trust', color: '139,92,246',  a: 0,        speed: 0.16, rx: 0.40, ry: 0.155, tilt: -0.32, size: 6.5, lit: 0, trail: [] },
+            { key: 'pet',   color: '249,115,22',  a: Math.PI,  speed: 0.24, rx: 0.28, ry: 0.30,  tilt: 0.55,  size: 5.5, lit: 0, trail: [] }
         ];
+        /* Which door the pointer is on, and the camera. `cam.t` runs 0->1 when
+           you commit to a door: the view flies INTO that planet. It replaces
+           the colour-flood warp with the thing the flood was standing in for. */
+        var hovered = null;
+        var cam = { t: 0, target: null };
         function resize() {
             DPR = Math.min(window.devicePixelRatio || 1, 2);
             W = canvas.width = Math.floor(innerWidth * DPR);
@@ -447,6 +481,39 @@
                     tw: Math.random()*Math.PI*2, sp: Math.random()*0.9+0.3, base: Math.random()*0.4+0.15 });
             }
         }
+        /* The star at the centre of both orbits is the Trust Orbit mark: a
+           Bernoulli lemniscate, the same infinity the app icon draws by
+           travelling. It replaces a nameless white radial glow. The two
+           products orbit the thing they have in common, which is the whole
+           claim the page is making. */
+        function drawStar(now) {
+            var R = unit * 0.034;
+            var pulse = 1 + Math.sin(now / 1400) * 0.03;
+            ctx.save();
+            ctx.translate(cx, cy); ctx.scale(pulse, pulse);
+            /* Built AFTER the translate, in LOCAL coordinates. Created in screen
+               space it lands offset by (cx, cy) — the stroke then samples the far
+               tail of the ramp and the mark renders flat grey, which is exactly
+               what it did the first time. */
+            var g = ctx.createLinearGradient(-R*1.6, 0, R*1.6, 0);
+            g.addColorStop(0, 'rgba(208,188,255,0.42)');   // the app's own CTA violet
+            g.addColorStop(1, 'rgba(76,215,246,0.42)');    // ...into its cyan
+            ctx.beginPath();
+            for (var t = 0; t <= Math.PI*2 + 0.02; t += 0.02) {
+                var d = 1 + Math.sin(t) * Math.sin(t);
+                var x = (R * 1.6 * Math.cos(t)) / d;
+                var y = (R * 1.6 * Math.cos(t) * Math.sin(t)) / d;
+                if (t === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = g;
+            /* Thin and half-lit on purpose: this is the sky, not the hero. The
+               h1 is 96px at 18.43:1 and must stay the loudest thing here. */
+            ctx.lineWidth = Math.max(1.2, R * 0.09) * DPR;
+            ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+            ctx.shadowColor = 'rgba(160,120,255,0.35)'; ctx.shadowBlur = R * 0.7 * DPR;
+            ctx.stroke();
+            ctx.restore();
+        }
         function ringPoint(b, a) {
             var x = Math.cos(a) * b.rx * unit, y = Math.sin(a) * b.ry * unit;
             var c = Math.cos(b.tilt), s = Math.sin(b.tilt);
@@ -459,13 +526,36 @@
                 if (a === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
             }
             // 0.10 against the vignette above was 1.017:1 — drawn, then erased.
-            ctx.strokeStyle = 'rgba(' + b.color + ',0.35)';
+            // Brightens with `lit`, so hovering a door lights its own orbit.
+            ctx.strokeStyle = 'rgba(' + b.color + ',' + (0.35 + b.lit * 0.45) + ')';
             ctx.lineWidth = 1 * DPR; ctx.stroke();
         }
         var last = performance.now();
+        /* ease-out-quint: fast commitment, soft arrival. No bounce. */
+        function easeOutQuint(x) { return 1 - Math.pow(1 - x, 5); }
         function frame(now) {
             var dt = Math.min((now - last) / 1000, 0.05); last = now;
             ctx.clearRect(0, 0, W, H);
+
+            // Each planet eases toward lit/unlit rather than snapping.
+            for (var h = 0; h < bodies.length; h++) {
+                var want = (hovered === null || hovered === bodies[h].key) ? (hovered ? 1 : 0) : -0.5;
+                bodies[h].lit += (want - bodies[h].lit) * Math.min(1, dt * 6);
+            }
+
+            /* THE CAMERA. Committing to a door flies the view into that planet
+               instead of flashing its colour over everything: same moment, but
+               it means what it shows. Scale and translate only — no layout is
+               animated, and the whole scene is one transform. */
+            ctx.save();
+            if (cam.target) {
+                cam.t = Math.min(1, cam.t + dt / 0.62);
+                var e = easeOutQuint(cam.t);
+                var camP = ringPoint(cam.target, cam.target.a);
+                var z = 1 + e * 13;
+                ctx.translate(cx, cy); ctx.scale(z, z);
+                ctx.translate(-camP.x, -camP.y);
+            }
 
             // stars
             for (var i = 0; i < stars.length; i++) {
@@ -475,11 +565,12 @@
                 ctx.fillStyle = 'rgba(200,214,240,' + Math.max(0, al) + ')'; ctx.fill();
             }
 
-            // core glow
+            // The halo, then the mark it belongs to.
             var core = ctx.createRadialGradient(cx, cy, 0, cx, cy, unit*0.16);
-            core.addColorStop(0, 'rgba(220,230,255,0.16)');
-            core.addColorStop(1, 'rgba(220,230,255,0)');
+            core.addColorStop(0, 'rgba(190,180,255,0.14)');
+            core.addColorStop(1, 'rgba(190,180,255,0)');
             ctx.fillStyle = core; ctx.beginPath(); ctx.arc(cx, cy, unit*0.16, 0, Math.PI*2); ctx.fill();
+            drawStar(now);
 
             for (var k = 0; k < bodies.length; k++) {
                 var b = bodies[k];
@@ -498,11 +589,23 @@
                 g.addColorStop(0, 'rgba(' + b.color + ',0.55)');
                 g.addColorStop(1, 'rgba(' + b.color + ',0)');
                 ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x, p.y, b.size*DPR*5, 0, Math.PI*2); ctx.fill();
-                ctx.beginPath(); ctx.arc(p.x, p.y, b.size*DPR, 0, Math.PI*2);
-                ctx.fillStyle = 'rgba(' + b.color + ',0.95)'; ctx.fill();
+                ctx.beginPath(); ctx.arc(p.x, p.y, b.size*DPR*(1 + b.lit*0.5), 0, Math.PI*2);
+                ctx.fillStyle = 'rgba(' + b.color + ',' + Math.max(0.35, 0.95 + b.lit*0.05) + ')'; ctx.fill();
             }
+            ctx.restore();   // closes the camera transform
             requestAnimationFrame(frame);
         }
+        /* The doors drive the sky. Exposed rather than reaching into the DOM
+           from in here, so the door handlers stay the one place that knows
+           what a door is. */
+        window.__orbit = {
+            hover: function (key) { hovered = key; },
+            fly: function (key) {
+                for (var i = 0; i < bodies.length; i++) {
+                    if (bodies[i].key === key) { cam.target = bodies[i]; cam.t = 0; return; }
+                }
+            }
+        };
         resize(); window.addEventListener('resize', resize);
         requestAnimationFrame(frame);
     })();
