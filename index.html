@@ -273,10 +273,26 @@
         .warp.trust { background: radial-gradient(120% 120% at 50% 50%, #4C1D95, #170a30 70%, #06070E); }
         .warp.pet   { background: radial-gradient(120% 120% at 50% 50%, #C2410C, #3a1606 70%, #06070E); }
 
+        /* This page has exactly one job: a two-way choice. On a phone it was
+           showing one and a half — Trust Orbit 100% visible, Pet Orbit 44%,
+           its CTA 110px BELOW the fold. Measured at 375x812.
+
+           And it was never a space problem. Both doors need 587px of an 812px
+           viewport: 225px of slack. The hero was eating 384px to say "choose
+           your orbit" — a headline describing an action the layout then
+           prevented. This is arithmetic, not taste.
+
+           The subtitle is 103px of that, and on a phone it is the cheapest
+           thing to lose: its second half ("Pick where you're headed") is what
+           the two labelled doors below already say, at the moment you can act
+           on it. It stays on desktop, where it costs nothing. */
         @media (max-width: 720px) {
-            .doors { grid-template-columns: 1fr; }
+            .doors { grid-template-columns: 1fr; margin-top: 20px; }
             h1 { font-size: clamp(2.6rem, 12vw, 3.4rem); }
             .door { min-height: 190px; }
+            main { padding-top: 16px; padding-bottom: 20px; }
+            .kicker { margin-bottom: 10px; }
+            .sub { display: none; }
         }
 
         @media (prefers-reduced-motion: reduce) {
