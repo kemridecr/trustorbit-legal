@@ -286,6 +286,29 @@
            thing to lose: its second half ("Pick where you're headed") is what
            the two labelled doors below already say, at the moment you can act
            on it. It stays on desktop, where it costs nothing. */
+        /* Nothing on this page was styled for a keyboard: zero :focus-visible
+           rules, zero :focus, zero outlines. You could tab through the whole
+           thing and never see where you were — on a page whose only job is a
+           choice between two links.
+
+           :focus-visible, not :focus, so a mouse click doesn't leave a ring
+           behind. Each door rings in its OWN colour, which is the same promise
+           the hover already makes: the thing you are attending to answers in the
+           colour of the thing you'd get. The doors' focus handlers already light
+           their planet — the sky was answering a selection you couldn't see. */
+        .door:focus-visible {
+            outline: 2px solid var(--trust-bright);
+            outline-offset: 4px;
+        }
+        .door--pet:focus-visible { outline-color: var(--pet-bright); }
+        .lang button:focus-visible,
+        .foot a:focus-visible,
+        .wordmark:focus-visible {
+            outline: 2px solid var(--trust-bright);
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+
         @media (max-width: 720px) {
             .doors { grid-template-columns: 1fr; margin-top: 20px; }
             h1 { font-size: clamp(2.6rem, 12vw, 3.4rem); }
