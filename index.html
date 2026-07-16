@@ -42,12 +42,23 @@
             --bg-2: #090B15;
             --ink: #F3F5FA;
             --muted: #9AA3B7;
-            --faint: #656E85;
+            /* Was #656E85 = 3.95:1 on --bg, under the 4.5:1 floor, in all FOUR places
+               it is used: the kicker, the footer copyright, the footer links, and
+               the "Labs" in our own wordmark. One token, four failures. */
+            --faint: #8A93AB;
             --line: rgba(255,255,255,0.09);
             /* Trust Orbit pole */
-            --trust: #3B82F6;
-            --trust-bright: #60A5FA;
-            --trust-deep: #1D4ED8;
+            /* Trust Orbit's ACTUAL colours, taken from the app rather than from
+               a framework. These were #3B82F6 / #60A5FA / #1D4ED8 — Tailwind's
+               blue-500 / blue-400 / blue-700, unmodified, six for six with Pet.
+               That isn't only a slop tell: the app this door sells is VIOLET.
+               Its CTA gradient is #d0bcff -> #a078ff -> #4cd7f6 and the icon is
+               a violet-to-cyan lemniscate. The site was selling the product in a
+               colour the product does not use — tap the blue door, download a
+               violet app. Same brand, two identities. Now it's one. */
+            --trust: #8B5CF6;
+            --trust-bright: #A078FF;
+            --trust-deep: #4C1D95;
             /* Pet Orbit pole */
             --pet: #F97316;
             --pet-bright: #FB923C;
@@ -80,7 +91,12 @@
         .vignette {
             position: fixed; inset: 0; z-index: 1; pointer-events: none;
             background:
-                radial-gradient(60% 50% at 50% 42%, rgba(6,7,14,0.78) 0%, rgba(6,7,14,0.30) 45%, rgba(6,7,14,0) 72%),
+                /* Inner stop was 0.78 — a 78% black scrim painted over the exact centre
+                   where the orbits live, dropping the rings to 1.017:1 against
+                   their own background. 1.0:1 is the same colour. The page is
+                   named Orbit and the orbit was not visible. The h1 measures
+                   18.43:1 and never needed the scrim to survive. */
+                radial-gradient(60% 50% at 50% 42%, rgba(6,7,14,0.45) 0%, rgba(6,7,14,0.22) 45%, rgba(6,7,14,0) 72%),
                 radial-gradient(120% 90% at 50% 120%, rgba(6,7,14,0.7), rgba(6,7,14,0) 60%);
         }
         .grain {
@@ -108,7 +124,7 @@
         .wordmark .dot {
             width: 26px; height: 26px; border-radius: 50%;
             background: conic-gradient(from 210deg, var(--trust), var(--pet), var(--trust));
-            box-shadow: 0 0 18px rgba(96,165,250,.5), inset 0 0 8px rgba(0,0,0,.3);
+            box-shadow: 0 0 18px rgba(160,120,255,.5), inset 0 0 8px rgba(0,0,0,.3);
             position: relative;
         }
         .wordmark .dot::after {
@@ -179,15 +195,15 @@
             -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
             -webkit-mask-composite: xor; mask-composite: exclude;
         }
-        .door--trust::before { background: radial-gradient(120% 100% at 15% 0%, rgba(59,130,246,.28), transparent 60%); }
+        .door--trust::before { background: radial-gradient(120% 100% at 15% 0%, rgba(139,92,246,.28), transparent 60%); }
         .door--pet::before   { background: radial-gradient(120% 100% at 85% 0%, rgba(249,115,22,.28), transparent 60%); }
-        .door--trust::after  { background: linear-gradient(135deg, rgba(96,165,250,.7), transparent 40%); }
+        .door--trust::after  { background: linear-gradient(135deg, rgba(160,120,255,.7), transparent 40%); }
         .door--pet::after    { background: linear-gradient(225deg, rgba(251,146,60,.7), transparent 40%); }
 
         .door:hover { transform: translateY(-8px) scale(1.012); }
         .door:hover::before { opacity: 1; }
         .door:hover::after  { opacity: 1; }
-        .door--trust:hover { border-color: rgba(96,165,250,.5); box-shadow: 0 30px 70px -30px rgba(37,99,235,.55); }
+        .door--trust:hover { border-color: rgba(160,120,255,.5); box-shadow: 0 30px 70px -30px rgba(109,40,217,.55); }
         .door--pet:hover   { border-color: rgba(251,146,60,.5); box-shadow: 0 30px 70px -30px rgba(249,115,22,.55); }
         /* Spotlight: dim the sibling when one is hovered */
         .doors:hover .door:not(:hover) { opacity: .55; transform: scale(.985); }
@@ -197,7 +213,7 @@
             display: grid; place-items: center;
             border: 1px solid var(--line);
         }
-        .door--trust .door-badge { background: rgba(59,130,246,.14); color: var(--trust-bright); }
+        .door--trust .door-badge { background: rgba(139,92,246,.14); color: var(--trust-bright); }
         .door--pet .door-badge   { background: rgba(249,115,22,.14); color: var(--pet-bright); }
         .door-badge svg { width: 27px; height: 27px; }
 
@@ -226,8 +242,17 @@
         footer.foot a:hover { color: var(--ink); }
 
         /* ---- Entrance choreography ---- */
+        /* The reveal hides from a VISIBLE baseline and un-hides on `.in`.
+           `.in` lives on <main>, but <footer> is main's SIBLING, so the old
+           `.js .in .reveal` never matched it and the footer shipped at
+           opacity 0 — permanently, for every default visitor. Terms,
+           Privacy, Support and Contact have never been seen. Two tells that
+           confirmed it: the footer appeared with JS disabled, and appeared
+           under prefers-reduced-motion, because both paths skip this rule.
+           Scoped to `.shell` now, which actually contains both. */
         .js .reveal { opacity: 0; transform: translateY(18px); }
-        .js .in .reveal { opacity: 1; transform: none; transition: opacity .8s var(--ease), transform .8s var(--ease); }
+        .js .in .reveal,
+        .js .shell.in .reveal { opacity: 1; transform: none; transition: opacity .8s var(--ease), transform .8s var(--ease); }
         .in .r1 { transition-delay: .05s; }
         .in .r2 { transition-delay: .16s; }
         .in .r3 { transition-delay: .28s; }
@@ -241,7 +266,11 @@
             opacity: 0; transition: opacity .5s var(--ease);
         }
         .warp.on { opacity: 1; }
-        .warp.trust { background: radial-gradient(120% 120% at 50% 50%, #1D4ED8, #0a1330 70%, #06070E); }
+        /* The warp is the best moment on this page — the viewport floods with the
+           product's colour as you commit to it. It was flooding blue-700 for a
+           violet app: the one instant the site promises what you're about to
+           open, promising the wrong thing. */
+        .warp.trust { background: radial-gradient(120% 120% at 50% 50%, #4C1D95, #170a30 70%, #06070E); }
         .warp.pet   { background: radial-gradient(120% 120% at 50% 50%, #C2410C, #3a1606 70%, #06070E); }
 
         @media (max-width: 720px) {
@@ -263,7 +292,11 @@
     <div class="vignette" aria-hidden="true"></div>
     <div class="grain" aria-hidden="true"></div>
 
-    <div class="shell">
+    <!-- `in` lives HERE, not on <main>. The reveal rule needs an `.in`
+         ANCESTOR, and <footer> is main's sibling — so with `in` on main the
+         footer matched nothing and shipped at opacity 0 forever. .shell is
+         the only node that contains both. -->
+    <div class="shell in">
         <header class="top">
             <a class="wordmark" href="/" aria-label="Orbit Labs home">
                 <span class="dot" aria-hidden="true"></span>
@@ -275,7 +308,7 @@
             </div>
         </header>
 
-        <main class="in">
+        <main>
             <span class="kicker reveal r1" data-i18n="kicker">Orbit Labs · Costa Rica</span>
             <h1 class="reveal r2" data-i18n-html="headline">Choose your <span class="glow-t">orbit</span></h1>
             <p class="sub reveal r3" data-i18n="sub">Two products, one mission — technology that earns trust and keeps what matters safe. Pick where you're headed.</p>
@@ -398,7 +431,7 @@
         var ctx = canvas.getContext('2d');
         var W, H, DPR, cx, cy, unit, stars = [];
         var bodies = [
-            { color: '59,130,246',  a: 0,        speed: 0.16, rx: 0.40, ry: 0.155, tilt: -0.32, size: 6.5, trail: [] }, // trust
+            { color: '139,92,246',  a: 0,        speed: 0.16, rx: 0.40, ry: 0.155, tilt: -0.32, size: 6.5, trail: [] }, // trust
             { color: '249,115,22',  a: Math.PI,  speed: 0.24, rx: 0.28, ry: 0.30,  tilt: 0.55,  size: 5.5, trail: [] }  // pet
         ];
         function resize() {
@@ -425,7 +458,8 @@
                 var p = ringPoint(b, a);
                 if (a === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
             }
-            ctx.strokeStyle = 'rgba(' + b.color + ',0.10)';
+            // 0.10 against the vignette above was 1.017:1 — drawn, then erased.
+            ctx.strokeStyle = 'rgba(' + b.color + ',0.35)';
             ctx.lineWidth = 1 * DPR; ctx.stroke();
         }
         var last = performance.now();
